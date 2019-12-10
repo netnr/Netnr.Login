@@ -1,0 +1,3229 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Netnr.Login</name>
+    </assembly>
+    <members>
+        <member name="T:Netnr.Login.AliPay">
+            <summary>
+            支付宝
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.AliPay.AuthorizeHref(Netnr.Login.AliPay_Authorize_RequestEntity)">
+            <summary>
+            Step1：请求用户授权Token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.AliPay.AccessToken(Netnr.Login.AliPay_AccessToken_RequestEntity)">
+            <summary>
+            Step2：获取授权过的Access Token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.AliPay.User(Netnr.Login.AliPay_User_RequestEntity)">
+            <summary>
+            Step3：获取个人信息
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.AliPay.Signature``1(``0,System.String,System.String)">
+            <summary>
+            签名
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="mo"></param>
+            <param name="charset">编码，默认UTF8</param>
+            <param name="signType">加密类型，默认RSA2</param>
+        </member>
+        <member name="T:Netnr.Login.AliPayConfig">
+            <summary>
+            配置
+            
+            步骤：authorize => access_token
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.AliPayConfig.API_Authorize">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.AliPayConfig.API_Gateway">
+            <summary>
+            网关
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.AliPayConfig.AppId">
+            <summary>
+            App Key
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.AliPayConfig.AppPrivateKey">
+            <summary>
+            App Secret
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.AliPayConfig.Redirect_Uri">
+            <summary>
+            回调
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.AliPay_AccessToken_RequestEntity">
+            <summary>
+            Step2：Oauth2/access token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_RequestEntity.app_id">
+            <summary>
+            支付宝分配给开发者的应用ID
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_RequestEntity.method">
+            <summary>
+            接口名称
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_RequestEntity.format">
+            <summary>
+            仅支持JSON
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_RequestEntity.charset">
+            <summary>
+            请求使用的编码格式，如utf-8,gbk,gb2312等
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_RequestEntity.sign_type">
+            <summary>
+            商户生成签名字符串所使用的签名算法类型，目前支持RSA2和RSA，推荐使用RSA2
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_RequestEntity.sign">
+            <summary>
+            商户请求参数的签名串
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_RequestEntity.timestamp">
+            <summary>
+            发送请求的时间，格式"yyyy-MM-dd HH:mm:ss"
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_RequestEntity.version">
+            <summary>
+            调用的接口版本，固定为：1.0
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_RequestEntity.grant_type">
+            <summary>
+            值为authorization_code时，代表用code换取；值为refresh_token时，代表用refresh_token换取
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_RequestEntity.code">
+            <summary>
+            授权码，用户对应用授权后得到。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.AliPay_AccessToken_ResultEntity">
+            <summary>
+            返回  access_token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_ResultEntity.user_id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_ResultEntity.access_token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_ResultEntity.expires_in">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_ResultEntity.refresh_token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_ResultEntity.re_expires_in">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_ResultEntity.code">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_ResultEntity.msg">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_ResultEntity.sub_code">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_AccessToken_ResultEntity.sub_msg">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.AliPay_Authorize_RequestEntity">
+            <summary>
+            Step1：Oauth2/authorize
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_Authorize_RequestEntity.app_id">
+            <summary>
+            商户的APPID
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_Authorize_RequestEntity.redirect_uri">
+            <summary>
+            页面跳回地址（重定向地址）
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_Authorize_RequestEntity.state">
+            <summary>
+            商户自定义参数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_Authorize_RequestEntity.scope">
+            <summary>
+            参数传递auth_user
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.AliPay_User_RequestEntity">
+            <summary>
+            user
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_RequestEntity.app_id">
+            <summary>
+            支付宝分配给开发者的应用ID
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_RequestEntity.method">
+            <summary>
+            接口名称
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_RequestEntity.format">
+            <summary>
+            仅支持JSON
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_RequestEntity.charset">
+            <summary>
+            请求使用的编码格式，如utf-8,gbk,gb2312等
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_RequestEntity.sign_type">
+            <summary>
+            商户生成签名字符串所使用的签名算法类型，目前支持RSA2和RSA，推荐使用RSA2
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_RequestEntity.sign">
+            <summary>
+            商户请求参数的签名串
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_RequestEntity.timestamp">
+            <summary>
+            发送请求的时间，格式"yyyy-MM-dd HH:mm:ss"
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_RequestEntity.version">
+            <summary>
+            调用的接口版本，固定为：1.0
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_RequestEntity.auth_token">
+            <summary>
+            针对用户授权接口，获取用户相关数据时，用于标识用户授权关系
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.AliPay_User_ResultEntity">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.code">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.msg">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.user_id">
+            <summary>
+            账号
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.avatar">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.province">
+            <summary>
+            省份
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.city">
+            <summary>
+            城市
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.nick_name">
+            <summary>
+            昵称
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.is_student_certified">
+            <summary>
+            学生认证
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.user_type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.user_status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.is_certified">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.gender">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.sub_code">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.AliPay_User_ResultEntity.sub_msg">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.DingTalk">
+            <summary>
+            钉钉
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.DingTalk.AccessToken(Netnr.Login.DingTalk_AccessToken_RequestEntity)">
+            <summary>
+            获取access_token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.DingTalk.User(Netnr.Login.DingTalk_User_RequestEntity,System.String)">
+            <summary>
+            获取 用户信息
+            </summary>
+            <param name="entity">签名参数</param>
+            <param name="code">临时授权码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.DingTalk.AuthorizeHref_ScanCode(Netnr.Login.DingTalk_Authorize_RequestEntity)">
+            <summary>
+            请求授权地址,扫码登录
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.DingTalk.AuthorizeHref_Password(Netnr.Login.DingTalk_Authorize_RequestEntity)">
+            <summary>
+            请求授权地址,密码登录
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Login.DingTalkConfig">
+            <summary>
+            配置
+            
+            步骤：authorize => user
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.DingTalkConfig.API_Authorize_ScanCode">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.DingTalkConfig.API_Authorize_Password">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.DingTalkConfig.API_AccessToken">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.DingTalkConfig.API_User">
+            <summary>
+            POST
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.DingTalkConfig.appId">
+            <summary>
+            appId
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.DingTalkConfig.appSecret">
+            <summary>
+            appSecret
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.DingTalkConfig.Redirect_Uri">
+            <summary>
+            回调
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.DingTalk_AccessToken_RequestEntity">
+            <summary>
+            access token 请求参数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_AccessToken_RequestEntity.appid">
+            <summary>
+            应用的唯一标识key
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_AccessToken_RequestEntity.appsecret">
+            <summary>
+            应用的密钥
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.DingTalk_AccessToken_ResultEntity">
+            <summary>
+            access token 请求参数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_AccessToken_ResultEntity.errcode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_AccessToken_ResultEntity.errmsg">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_AccessToken_ResultEntity.access_token">
+            <summary>
+            token
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.DingTalk_Authorize_RequestEntity">
+            <summary>
+            Step1：获取authorize Code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_Authorize_RequestEntity.appid">
+            <summary>
+            注册应用时的获取的client_id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_Authorize_RequestEntity.redirect_uri">
+            <summary>
+            github鉴权成功之后，重定向到网站
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_Authorize_RequestEntity.state">
+            <summary>
+            自己设定，用于防止跨站请求伪造攻击
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_Authorize_RequestEntity.scope">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_Authorize_RequestEntity.response_type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.DingTalk_User_RequestEntity">
+            <summary>
+            user
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.DingTalk_User_RequestEntity.#ctor">
+            <summary>
+            构造，签名
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_User_RequestEntity.accessKey">
+            <summary>
+            appid
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_User_RequestEntity.timestamp">
+            <summary>
+            当前时间戳，单位是毫秒
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_User_RequestEntity.signature">
+            <summary>
+            通过appSecret计算出来的签名值
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.DingTalk_User_ResultEntity">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_User_ResultEntity.nick">
+            <summary>
+            用户在钉钉上面的昵称
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_User_ResultEntity.openid">
+            <summary>
+            用户在当前开放应用内的唯一标识
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.DingTalk_User_ResultEntity.unionid">
+            <summary>
+            用户在当前开放应用所属企业的唯一标识
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Gitee_AccessToken_RequestEntity">
+            <summary>
+            access token 请求参数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_AccessToken_RequestEntity.client_id">
+            <summary>
+            注册应用时的获取的client_id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_AccessToken_RequestEntity.client_secret">
+            <summary>
+            注册应用时的获取的client_secret。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_AccessToken_RequestEntity.code">
+            <summary>
+            调用authorize获得的code值。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_AccessToken_RequestEntity.redirect_uri">
+            <summary>
+            回调地址，需需与注册应用里的回调地址一致。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_AccessToken_RequestEntity.grant_type">
+            <summary>
+            固定值
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Gitee_AccessToken_ResultEntity">
+            <summary>
+            access_token 信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_AccessToken_ResultEntity.access_token">
+            <summary>
+            token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_AccessToken_ResultEntity.token_type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_AccessToken_ResultEntity.expires_in">
+            <summary>
+            有效期
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_AccessToken_ResultEntity.refresh_token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_AccessToken_ResultEntity.scope">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_AccessToken_ResultEntity.created_at">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Gitee_Authorize_RequestEntity">
+            <summary>
+            Step1：获取authorize Code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_Authorize_RequestEntity.client_id">
+            <summary>
+            注册应用时的获取的client_id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_Authorize_RequestEntity.redirect_uri">
+            <summary>
+            Gitee鉴权成功之后，重定向到网站
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_Authorize_RequestEntity.response_type">
+            <summary>
+            固定值，传 code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_Authorize_RequestEntity.state">
+            <summary>
+            说明：码云不支持该参数
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Gitee_User_RequestEntity">
+            <summary>
+            user
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_RequestEntity.access_token">
+            <summary>
+            access_token
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Gitee_User_ResultEntity">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.login">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.avatar_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.html_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.followers_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.following_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.gists_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.starred_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.subscriptions_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.organizations_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.repos_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.events_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.received_events_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.site_admin">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.blog">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.weibo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.bio">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.public_repos">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.public_gists">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.followers">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.following">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.stared">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.watched">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.created_at">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Gitee_User_ResultEntity.updated_at">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Gitee">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.Gitee.AuthorizeHref(Netnr.Login.Gitee_Authorize_RequestEntity)">
+            <summary>
+            请求授权地址
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.Gitee.AccessToken(Netnr.Login.Gitee_AccessToken_RequestEntity)">
+            <summary>
+            获取 access token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.Gitee.User(Netnr.Login.Gitee_User_RequestEntity)">
+            <summary>
+            获取 用户信息
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Login.GiteeConfig">
+            <summary>
+            配置
+            
+            步骤：authorize => access_token => user
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GiteeConfig.API_Authorize">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GiteeConfig.API_AccessToken">
+            <summary>
+            POST
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GiteeConfig.API_User">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GiteeConfig.ClientID">
+            <summary>
+            Client ID
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GiteeConfig.ClientSecret">
+            <summary>
+            Client Secret
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GiteeConfig.Redirect_Uri">
+            <summary>
+            回调
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.GitHub_AccessToken_RequestEntity">
+            <summary>
+            access token 请求参数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_AccessToken_RequestEntity.client_id">
+            <summary>
+            注册应用时的获取的client_id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_AccessToken_RequestEntity.client_secret">
+            <summary>
+            注册应用时的获取的client_secret。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_AccessToken_RequestEntity.code">
+            <summary>
+            调用authorize获得的code值。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_AccessToken_RequestEntity.redirect_uri">
+            <summary>
+            回调地址，需需与注册应用里的回调地址一致。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_AccessToken_RequestEntity.state">
+            <summary>
+            Step1 回传的值
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.GitHub_AccessToken_ResultEntity">
+            <summary>
+            access_token 信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_AccessToken_ResultEntity.access_token">
+            <summary>
+            access_token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_AccessToken_ResultEntity.token_type">
+            <summary>
+            类型
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_AccessToken_ResultEntity.scope">
+            <summary>
+            授权的信息
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.GitHub_Authorize_RequestEntity">
+            <summary>
+            Step1：获取authorize Code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_Authorize_RequestEntity.client_id">
+            <summary>
+            注册应用时的获取的client_id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_Authorize_RequestEntity.redirect_uri">
+            <summary>
+            github鉴权成功之后，重定向到网站
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_Authorize_RequestEntity.state">
+            <summary>
+            自己设定，用于防止跨站请求伪造攻击
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_Authorize_RequestEntity.scope">
+            <summary>
+            该参数可选。需要调用Github哪些信息，可以填写多个，以逗号分割，比如：scope=user public_repo。
+            如果不填写，那么你的应用程序将只能读取Github公开的信息，比如公开的用户信息，公开的库(repository)信息以及gists信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_Authorize_RequestEntity.allow_signup">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.GitHub_User_RequestEntity">
+            <summary>
+            user
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_RequestEntity.access_token">
+            <summary>
+            access_token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_RequestEntity.ApplicationName">
+            <summary>
+            github 申请的应用名称
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.GitHub_User_ResultEntity">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.login">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.avatar_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.gravatar_id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.html_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.followers_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.following_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.gists_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.starred_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.subscriptions_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.organizations_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.repos_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.events_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.received_events_url">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.site_admin">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.company">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.blog">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.location">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.hireable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.bio">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.public_repos">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.public_gists">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.followers">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.following">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.created_at">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.updated_at">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.private_gists">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.total_private_repos">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.owned_private_repos">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.disk_usage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.collaborators">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.GitHub_User_ResultEntity.plan">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.GitHub">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.GitHub.AuthorizeHref(Netnr.Login.GitHub_Authorize_RequestEntity)">
+            <summary>
+            请求授权地址
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.GitHub.AccessToken(Netnr.Login.GitHub_AccessToken_RequestEntity)">
+            <summary>
+            获取 access token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.GitHub.User(Netnr.Login.GitHub_User_RequestEntity)">
+            <summary>
+            获取 用户信息
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Login.GitHubConfig">
+            <summary>
+            配置
+            
+            步骤：authorize => access_token => user
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GitHubConfig.API_Authorize">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GitHubConfig.API_AccessToken">
+            <summary>
+            POST
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GitHubConfig.API_User">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GitHubConfig.ClientID">
+            <summary>
+            Client ID
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GitHubConfig.ClientSecret">
+            <summary>
+            Client Secret
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GitHubConfig.Redirect_Uri">
+            <summary>
+            回调
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GitHubConfig.ApplicationName">
+            <summary>
+            github 申请的应用名称
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Google_AccessToken_RequestEntity">
+            <summary>
+            access token 请求参数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_AccessToken_RequestEntity.client_id">
+            <summary>
+            注册应用时的获取的client_id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_AccessToken_RequestEntity.client_secret">
+            <summary>
+            注册应用时的获取的client_secret。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_AccessToken_RequestEntity.code">
+            <summary>
+            调用authorize获得的code值。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_AccessToken_RequestEntity.redirect_uri">
+            <summary>
+            回调地址，需需与注册应用里的回调地址一致。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_AccessToken_RequestEntity.grant_type">
+            <summary>
+            固定值
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Google_AccessToken_ResultEntity">
+            <summary>
+            access_token 信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_AccessToken_ResultEntity.access_token">
+            <summary>
+            token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_AccessToken_ResultEntity.expires_in">
+            <summary>
+            过期时间
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_AccessToken_ResultEntity.scope">
+            <summary>
+            授权的作用域
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_AccessToken_ResultEntity.token_type">
+            <summary>
+            固定 Bearer
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_AccessToken_ResultEntity.id_token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Google_Authorize_RequestEntity">
+            <summary>
+            Step1：获取authorize Code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_Authorize_RequestEntity.client_id">
+            <summary>
+            注册应用时的获取的client_id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_Authorize_RequestEntity.response_type">
+            <summary>
+            固定值，传 code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_Authorize_RequestEntity.scope">
+            <summary>
+            范围值必须以字符串开始openid，然后包括profile或email或两者兼而有之
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_Authorize_RequestEntity.redirect_uri">
+            <summary>
+            鉴权成功之后，重定向到网站
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.Google_Authorize_RequestEntity.access_type">
+            <summary>
+            如果您的应用程序在浏览器中不存在用户时需要刷新访问令牌，则将该值设置为offline。 
+            此值指示Google授权服务器在您的应用程序第一次将授权代码交换为令牌时返回刷新令牌和访问令牌。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_Authorize_RequestEntity.state">
+            <summary>
+            请求防伪
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Google_User_RequestEntity">
+            <summary>
+            user
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_User_RequestEntity.access_token">
+            <summary>
+            access_token
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Google_User_ResultEntity">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_User_ResultEntity.sub">
+            <summary>
+            唯一标识
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_User_ResultEntity.name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_User_ResultEntity.given_name">
+            <summary>
+            名
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_User_ResultEntity.family_name">
+            <summary>
+            姓
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_User_ResultEntity.picture">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_User_ResultEntity.email">
+            <summary>
+            邮箱
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_User_ResultEntity.email_verified">
+            <summary>
+            邮箱是否验证
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Google_User_ResultEntity.locale">
+            <summary>
+            语言，国家
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Google">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.Google.AuthorizeHref(Netnr.Login.Google_Authorize_RequestEntity)">
+            <summary>
+            请求授权地址
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.Google.AccessToken(Netnr.Login.Google_AccessToken_RequestEntity)">
+            <summary>
+            获取 access token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.Google.User(Netnr.Login.Google_User_RequestEntity)">
+            <summary>
+            获取 用户信息
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Login.GoogleConfig">
+            <summary>
+            配置
+            
+            步骤：authorize => access_token => user
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GoogleConfig.API_Authorize">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GoogleConfig.API_AccessToken">
+            <summary>
+            POST
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GoogleConfig.API_User">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GoogleConfig.ClientID">
+            <summary>
+            Client ID
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GoogleConfig.ClientSecret">
+            <summary>
+            Client Secret
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.GoogleConfig.Redirect_Uri">
+            <summary>
+            回调
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.LoginBase">
+            <summary>
+            基础支持
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.LoginBase.LoginType">
+            <summary>
+            登录类型枚举
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.LoginBase.LoginType.QQ">
+            <summary>
+            腾讯QQ
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.LoginBase.LoginType.WeiBo">
+            <summary>
+            新浪微博
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.LoginBase.LoginType.WeChat">
+            <summary>
+            腾讯微信
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.LoginBase.LoginType.GitHub">
+            <summary>
+            GitHub
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.LoginBase.LoginType.Gitee">
+            <summary>
+            Gitee
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.LoginBase.LoginType.TaoBao">
+            <summary>
+            淘宝（天猫）
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.LoginBase.LoginType.MicroSoft">
+            <summary>
+            微软
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.LoginBase.LoginType.DingTalk">
+            <summary>
+            钉钉
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.LoginBase.LoginType.Google">
+            <summary>
+            谷歌
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.LoginBase.LoginType.AliPay">
+            <summary>
+            支付宝
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.LoginBase.LoginType.StackOverflow">
+            <summary>
+            Stack Overflow
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.LoginBase.AuthorizeResult">
+            <summary>
+            接收授权码、防伪标识
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.LoginBase.AuthorizeResult.code">
+            <summary>
+            授权码
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.LoginBase.AuthorizeResult.auth_code">
+            <summary>
+            授权码，AliPay支付宝
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.LoginBase.AuthorizeResult.state">
+            <summary>
+            防伪参数，如果传递参数，会回传该参数。
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.LoginBase.EntityToPars``1(``0)">
+            <summary>
+            实体 转 Pars
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.LoginBase.ResultOutput``1(System.String,System.Collections.Generic.List{System.String})">
+            <summary>
+            处理结果
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="result">请求的结果</param>
+            <param name="resultNeedJObject">处理的类型，默认JObject</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.LoginBase.IsValid``1(``0)">
+            <summary>
+            验证对象是否有效
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Login.MicroSoft_AccessToken_RequestEntity">
+            <summary>
+            access token 请求参数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_AccessToken_RequestEntity.client_id">
+            <summary>
+            注册应用时的获取的client_id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_AccessToken_RequestEntity.client_secret">
+            <summary>
+            注册应用时的获取的client_secret。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_AccessToken_RequestEntity.grant_type">
+            <summary>
+            固定值
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_AccessToken_RequestEntity.code">
+            <summary>
+            调用authorize获得的code值。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_AccessToken_RequestEntity.redirect_uri">
+            <summary>
+            用于获取 authorization_code 的相同 redirect_uri 值
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.MicroSoft_AccessToken_ResultEntity">
+            <summary>
+            access_token 信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_AccessToken_ResultEntity.token_type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_AccessToken_ResultEntity.expires_in">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_AccessToken_ResultEntity.scope">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_AccessToken_ResultEntity.access_token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_AccessToken_ResultEntity.user_id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.MicroSoft_Authorize_RequestEntity">
+            <summary>
+            Step1：获取authorize Code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_Authorize_RequestEntity.client_id">
+            <summary>
+            注册应用时的获取的client_id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_Authorize_RequestEntity.response_type">
+            <summary>
+            必须包括授权代码流的 code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_Authorize_RequestEntity.scope">
+            <summary>
+            作用域
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_Authorize_RequestEntity.redirect_uri">
+            <summary>
+            鉴权成功之后，重定向到网站
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_Authorize_RequestEntity.state">
+            <summary>
+            自己设定，用于防止跨站请求伪造攻击
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.MicroSoft_User_RequestEntity">
+            <summary>
+            user
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_User_RequestEntity.access_token">
+            <summary>
+            access_token
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.MicroSoft_User_ResultEntity">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_User_ResultEntity.id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_User_ResultEntity.name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_User_ResultEntity.first_name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_User_ResultEntity.last_name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_User_ResultEntity.link">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_User_ResultEntity.gender">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_User_ResultEntity.emails">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_User_ResultEntity.locale">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.MicroSoft_User_ResultEntity.updated_time">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.MicroSoft">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.MicroSoft.AuthorizeHref(Netnr.Login.MicroSoft_Authorize_RequestEntity)">
+            <summary>
+            请求授权地址
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.MicroSoft.AccessToken(Netnr.Login.MicroSoft_AccessToken_RequestEntity)">
+            <summary>
+            获取 access token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.MicroSoft.User(Netnr.Login.MicroSoft_User_RequestEntity)">
+            <summary>
+            获取 用户信息
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Login.MicroSoftConfig">
+            <summary>
+            配置
+            
+            步骤：authorize => access_token => user
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.MicroSoftConfig.API_Authorize">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.MicroSoftConfig.API_AccessToken">
+            <summary>
+            POST
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.MicroSoftConfig.API_User">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.MicroSoftConfig.ClientID">
+            <summary>
+            Client ID
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.MicroSoftConfig.ClientSecret">
+            <summary>
+            Client Secret
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.MicroSoftConfig.Redirect_Uri">
+            <summary>
+            回调
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.QQ_AccessToken_RequestEntity">
+            <summary>
+            Step2：通过Authorization Code获取Access Token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_AccessToken_RequestEntity.grant_type">
+            <summary>
+            授权类型，在本步骤中，此值为“authorization_code”。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_AccessToken_RequestEntity.client_id">
+            <summary>
+            申请QQ登录成功后，分配给网站的appid。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_AccessToken_RequestEntity.client_secret">
+            <summary>
+            申请QQ登录成功后，分配给网站的appkey。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_AccessToken_RequestEntity.code">
+            <summary>
+            上一步返回的authorization code。
+            如果用户成功登录并授权，则会跳转到指定的回调地址，并在URL中带上Authorization Code。
+            例如，回调地址为www.qq.com/my.php，则跳转到：http://www.qq.com/my.php?code=520DD95263C1CFEA087******
+            注意此code会在10分钟内过期。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_AccessToken_RequestEntity.redirect_uri">
+            <summary>
+            与上面一步中传入的redirect_uri保持一致。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.QQ_AccessToken_ResultEntity">
+            <summary>
+            返回说明：
+            如果成功返回，即可在返回包中获取到Access Token。 
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_AccessToken_ResultEntity.access_token">
+            <summary>
+            授权令牌，Access_Token。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_AccessToken_ResultEntity.expires_in">
+            <summary>
+            该access token的有效期，单位为秒。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_AccessToken_ResultEntity.refresh_token">
+            <summary>
+            在授权自动续期步骤中，获取新的Access_Token时需要提供的参数。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.QQ_Authorization_RequestEntity">
+            <summary>
+            Step1：获取Authorization Code
+            Url：http://wiki.connect.qq.com/%E4%BD%BF%E7%94%A8authorization_code%E8%8E%B7%E5%8F%96access_token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_Authorization_RequestEntity.response_type">
+            <summary>
+            授权类型，此值固定为“code”。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_Authorization_RequestEntity.client_id">
+            <summary>
+            申请QQ登录成功后，分配给应用的appid。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_Authorization_RequestEntity.redirect_uri">
+            <summary>
+            成功授权后的回调地址，必须是注册appid时填写的主域名下的地址，
+            建议设置为网站首页或网站的用户中心。
+            注意需要将url进行URLEncode。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_Authorization_RequestEntity.state">
+            <summary>
+            client端的状态值。用于第三方应用防止CSRF攻击，成功授权后回调时会原样带回。
+            请务必严格按照流程检查用户与state参数状态的绑定。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_Authorization_RequestEntity.scope">
+            <summary>
+            请求用户授权时向用户显示的可进行授权的列表。
+            可填写的值是API文档中列出的接口，以及一些动作型的授权（目前仅有：do_like），如果要填写多个接口名称，请用逗号隔开。
+            例如：scope=get_user_info,list_album,upload_pic,do_like
+            不传则默认请求对接口get_user_info进行授权。
+            建议控制授权项的数量，只传入必要的接口名称，因为授权项越多，用户越可能拒绝进行任何授权。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_Authorization_RequestEntity.display">
+            <summary>
+            仅PC网站接入时使用。
+            用于展示的样式。不传则默认展示为PC下的样式。
+            如果传入“mobile”，则展示为mobile端下的样式。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_Authorization_RequestEntity.g_ut">
+            <summary>
+            仅WAP网站接入时使用。
+            QQ登录页面版本（1：wml版本； 2：xhtml版本），默认值为1。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.QQ_OpenAPI_RequestEntity">
+            <summary>
+            OpenAPI调用说明_OAuth2.0
+            前提说明
+            1. 该appid已经开通了该OpenAPI的使用权限。
+               从API列表的接口列表中可以看到，有的接口是完全开放的，有的接口则需要提前提交申请，以获取访问权限。
+            2. 准备访问的资源是用户授权可访问的。
+               网站调用该OpenAPI读写某个openid（用户）的信息时，必须是该用户已经对你的appid进行了该OpenAPI的授权
+               （例如用户已经设置了相册不对外公开，则网站是无法读取照片信息的）。
+               用户可以进入QQ空间->设置->授权管理进行访问权限的设置。
+            3. 已经成功获取到Access Token，并且Access Token在有效期内。
+            
+            调用OpenAPI接口
+            
+            QQ登录提供了用户信息/动态同步/日志/相册/微博等OpenAPI（详见API列表），
+            网站需要将请求发送到某个具体的OpenAPI接口，以访问或修改用户数据。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenAPI_RequestEntity.access_token">
+            <summary>
+            可通过使用Authorization_Code获取Access_Token 或来获取。 
+            access_token有3个月有效期。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenAPI_RequestEntity.oauth_consumer_key">
+            <summary>
+            申请QQ登录成功后，分配给应用的appid
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenAPI_RequestEntity.openid">
+            <summary>
+            用户的ID，与QQ号码一一对应。 
+            可通过调用https://graph.qq.com/oauth2.0/me?access_token=YOUR_ACCESS_TOKEN 来获取。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity">
+            <summary>
+            获取登录用户的昵称、头像、性别
+            Url：http://wiki.connect.qq.com/get_user_info
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.ret">
+            <summary>
+            返回码
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.msg">
+            <summary>
+            如果ret 小于 0，会有相应的错误信息提示，返回数据全部用UTF-8编码。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.nickname">
+            <summary>
+            用户在QQ空间的昵称。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.figureurl">
+            <summary>
+            大小为30×30像素的QQ空间头像URL。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.figureurl_1">
+            <summary>
+            大小为50×50像素的QQ空间头像URL。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.figureurl_2">
+            <summary>
+            大小为100×100像素的QQ空间头像URL。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.figureurl_qq_1">
+            <summary>
+            大小为40×40像素的QQ头像URL。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.figureurl_qq_2">
+            <summary>
+            大小为100×100像素的QQ头像URL。需要注意，不是所有的用户都拥有QQ的100x100的头像，但40x40像素则是一定会有。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.gender">
+            <summary>
+            性别。 如果获取不到则默认返回"男"
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.is_yellow_vip">
+            <summary>
+            标识用户是否为黄钻用户（0：不是；1：是）。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.vip">
+            <summary>
+            标识用户是否为黄钻用户（0：不是；1：是）
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.yellow_vip_level">
+            <summary>
+            黄钻等级
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.level">
+            <summary>
+            黄钻等级
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_get_user_info_ResultEntity.is_yellow_year_vip">
+            <summary>
+            标识是否为年费黄钻用户（0：不是； 1：是）
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.QQ_OpenId_RequestEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_RequestEntity.access_token">
+            <summary>
+            Step3：在Step1中获取到的access token。
+            Url：http://wiki.connect.qq.com/%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7openid_oauth2-0
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.QQ_OpenId_ResultEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_ResultEntity.client_id">
+            <summary>
+            client id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.QQ_OpenId_ResultEntity.openid">
+            <summary>
+            openid是此网站上唯一对应用户身份的标识，
+            网站可将此ID进行存储便于用户下次登录时辨识其身份，
+            或将其与用户在网站上的原有账号进行绑定。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.QQ">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.QQ.AuthorizationHref(Netnr.Login.QQ_Authorization_RequestEntity)">
+            <summary>
+            Step1：获取Authorization Code
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.QQ.AccessToken(Netnr.Login.QQ_AccessToken_RequestEntity)">
+            <summary>
+            Step2：通过Authorization Code获取Access Token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.QQ.OpenId(Netnr.Login.QQ_OpenId_RequestEntity)">
+            <summary>
+            Step3：获取用户OpenId
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.QQ.OpenId_Get_User_Info(Netnr.Login.QQ_OpenAPI_RequestEntity)">
+            <summary>
+            Step4：获取用户信息
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Login.QQConfig">
+            <summary>
+            配置
+            
+            步骤：Authorization => AccessToken => OpenId => OpenAPI（get_user_info）
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.QQConfig.API_Authorization_PC">
+            <summary>
+            PC网站，GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.QQConfig.API_AccessToken_PC">
+            <summary>
+            PC网站，GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.QQConfig.API_AccessToken_WAP">
+            <summary>
+            WAP网站，GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.QQConfig.API_OpenID_PC">
+            <summary>
+            PC GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.QQConfig.API_OpenID_WAP">
+            <summary>
+            WAP GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.QQConfig.API_Get_User_Info">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.QQConfig.APPID">
+            <summary>
+            APP ID
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.QQConfig.APPKey">
+            <summary>
+            APP Key
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.QQConfig.Redirect_Uri">
+            <summary>
+            回调
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Required">
+            <summary>
+            必填特性
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Required.Message">
+            <summary>
+            说明内容
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.StackOverflow_AccessToken_RequestEntity">
+            <summary>
+            access token 请求参数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_AccessToken_RequestEntity.client_id">
+            <summary>
+            注册应用时的获取的client_id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_AccessToken_RequestEntity.client_secret">
+            <summary>
+            应用的密钥
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_AccessToken_RequestEntity.code">
+            <summary>
+            授权得到的code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_AccessToken_RequestEntity.redirect_uri">
+            <summary>
+            回调地址
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.StackOverflow_AccessToken_ResultEntity">
+            <summary>
+            access token 请求参数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_AccessToken_ResultEntity.expires">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_AccessToken_ResultEntity.access_token">
+            <summary>
+            token
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.StackOverflow_Authorize_RequestEntity">
+            <summary>
+            Step1：获取authorize Code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_Authorize_RequestEntity.client_id">
+            <summary>
+            注册应用时的获取的client_id
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_Authorize_RequestEntity.redirect_uri">
+            <summary>
+            github鉴权成功之后，重定向到网站
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_Authorize_RequestEntity.state">
+            <summary>
+            自己设定，用于防止跨站请求伪造攻击
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_Authorize_RequestEntity.scope">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.StackOverflow_User_RequestEntity">
+            <summary>
+            user
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_RequestEntity.key">
+            <summary>
+            注册应用的Key
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_RequestEntity.access_token">
+            <summary>
+            token
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.StackOverflow_User_ResultEntity">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.account_id">
+            <summary>
+            账号ID
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.is_employee">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.last_modified_date">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.last_access_date">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.reputation_change_year">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.reputation_change_quarter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.reputation_change_month">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.reputation_change_week">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.reputation_change_day">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.reputation">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.creation_date">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.user_type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.user_id">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.location">
+            <summary>
+            地址
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.website_url">
+            <summary>
+            个人站点
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.link">
+            <summary>
+            主页
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.profile_image">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_ResultEntity.display_name">
+            <summary>
+            昵称
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.StackOverflow">
+            <summary>
+            钉钉
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.StackOverflow.AccessToken(Netnr.Login.StackOverflow_AccessToken_RequestEntity)">
+            <summary>
+            获取access_token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.StackOverflow.User(Netnr.Login.StackOverflow_User_RequestEntity)">
+            <summary>
+            获取 用户信息
+            </summary>
+            <param name="entity">签名参数</param>
+            <param name="code">临时授权码</param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.StackOverflow.AuthorizeHref(Netnr.Login.StackOverflow_Authorize_RequestEntity)">
+            <summary>
+            请求授权地址
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Login.StackOverflowConfig">
+            <summary>
+            配置
+            
+            步骤：authorize => user
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.StackOverflowConfig.API_Authorize">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.StackOverflowConfig.API_AccessToken">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.StackOverflowConfig.API_User">
+            <summary>
+            POST
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.StackOverflowConfig.ClientId">
+            <summary>
+            Client Id
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.StackOverflowConfig.ClientSecret">
+            <summary>
+            Client Secret
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.StackOverflowConfig.Key">
+            <summary>
+            Key
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.StackOverflowConfig.Redirect_Uri">
+            <summary>
+            回调
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.TaoBao_AccessToken_RequestEntity">
+            <summary>
+            Step2：Oauth2/access token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_RequestEntity.client_id">
+            <summary>
+            等同于AppKey，创建应用时获得。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_RequestEntity.client_secret">
+            <summary>
+            等同于AppSecret，创建应用时获得。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_RequestEntity.grant_type">
+            <summary>
+            authorization_code	授权类型 ，值为authorization_code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_RequestEntity.code">
+            <summary>
+            上一步获取code得到
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_RequestEntity.redirect_uri">
+            <summary>
+            可填写应用注册时回调地址域名。
+            redirect_uri指的是应用发起请求时，所传的回调地址参数，在用户授权后应用会跳转至redirect_uri。
+            要求与应用注册时填写的回调地址域名一致或顶级域名一致 。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_RequestEntity.state">
+            <summary>
+            可自定义，如1212等；维持应用的状态，传入值与返回值保持一致。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_RequestEntity.view">
+            <summary>
+            可选web、tmall或wap其中一种，
+            Web对应PC端（淘宝logo）浏览器页面样式；
+            Tmall对应天猫的浏览器页面样式；
+            Wap对应无线端的浏览器页面样式。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.TaoBao_AccessToken_ResultEntity">
+             <summary>
+            {
+              "w1_expires_in": 1800,
+              "refresh_token_valid_time": 1514644640120,
+              "taobao_user_nick": "%E8%AF%B801MJYrVT%2FW6g8OLsZngLEZnOeRYZ2r521t8%2FroSqbafnk%3D",
+              "re_expires_in": 0,
+              "expire_time": 1522420640120,
+              "open_uid": "AAERshfGAFz86deZvRTVNApR",
+              "token_type": "Bearer",
+              "access_token": "6201e00fhjd21471fe4fef96067d40e9d8c65ca4756aaef373548309",
+              "taobao_open_uid": "AAERshfGAFz86deZvRTVNApR",
+              "w1_valid": 1514646440120,
+              "refresh_token": "62029004ZZ3ec19727d202f832c6f8ea274ee7a48288c9d373548309",
+              "w2_expires_in": 0,
+              "w2_valid": 1514644640120,
+              "r1_expires_in": 1800,
+              "r2_expires_in": 0,
+              "r2_valid": 1514644640120,
+              "r1_valid": 1514646440120,
+              "expires_in": 7776000
+            }
+             </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.w1_expires_in">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.refresh_token_valid_time">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.taobao_user_nick">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.re_expires_in">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.expire_time">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.open_uid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.token_type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.access_token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.taobao_open_uid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.w1_valid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.refresh_token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.w2_expires_in">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.w2_valid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.r1_expires_in">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.r2_expires_in">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.r2_valid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.r1_valid">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.expires_in">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.TaoBao_Authorize_RequestEntity">
+            <summary>
+            Step1：Oauth2/authorize
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_Authorize_RequestEntity.response_type">
+            <summary>
+            授权类型 ，值为code。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_Authorize_RequestEntity.client_id">
+            <summary>
+            等同于appkey，创建应用时获得。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_Authorize_RequestEntity.redirect_uri">
+            <summary>
+            redirect_uri指的是应用发起请求时，所传的回调地址参数，在用户授权后应用会跳转至redirect_uri。
+            要求与应用注册时填写的回调地址域名一致或顶级域名一致 。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_Authorize_RequestEntity.state">
+            <summary>
+            维持应用的状态，传入值与返回值保持一致。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.TaoBao_Authorize_RequestEntity.view">
+            <summary>
+            web,可选web、tmall或wap其中一种，默认为web。
+            Web对应PC端（淘宝logo）浏览器页面样式；
+            Tmall对应天猫的浏览器页面样式；
+            Wap对应无线端的浏览器页面样式。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.TaoBao">
+            <summary>
+            淘宝（天猫）登录
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.TaoBao.AuthorizeHref(Netnr.Login.TaoBao_Authorize_RequestEntity)">
+            <summary>
+            Step1：请求用户授权Token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.TaoBao.AccessToken(Netnr.Login.TaoBao_AccessToken_RequestEntity)">
+            <summary>
+            Step2：获取授权过的Access Token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Login.TaoBaoConfig">
+            <summary>
+            配置
+            
+            步骤：authorize => access_token
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.TaoBaoConfig.API_Authorize">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.TaoBaoConfig.API_AccessToken">
+            <summary>
+            POST
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.TaoBaoConfig.AppKey">
+            <summary>
+            App Key
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.TaoBaoConfig.AppSecret">
+            <summary>
+            App Secret
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.TaoBaoConfig.Redirect_Uri">
+            <summary>
+            回调
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.WeChat_AccessToken_RequestEntity">
+            <summary>
+            Step2：通过Authorization Code获取Access Token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_AccessToken_RequestEntity.grant_type">
+            <summary>
+            填authorization_code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_AccessToken_RequestEntity.appid">
+            <summary>
+            应用唯一标识，在微信开放平台提交应用审核通过后获得
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_AccessToken_RequestEntity.secret">
+            <summary>
+            应用密钥AppSecret，在微信开放平台提交应用审核通过后获得
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_AccessToken_RequestEntity.code">
+            <summary>
+            填写第一步获取的code参数
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.WeChat_AccessToken_ResultEntity">
+            <summary>
+            返回说明：
+            如果成功返回，即可在返回包中获取到Access Token。 
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_AccessToken_ResultEntity.access_token">
+            <summary>
+            接口调用凭证
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_AccessToken_ResultEntity.expires_in">
+            <summary>
+            access_token接口调用凭证超时时间，单位（秒）
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_AccessToken_ResultEntity.refresh_token">
+            <summary>
+            用户刷新access_token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_AccessToken_ResultEntity.openid">
+            <summary>
+            授权用户唯一标识
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_AccessToken_ResultEntity.scope">
+            <summary>
+            用户授权的作用域，使用逗号（,）分隔
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_AccessToken_ResultEntity.unionid">
+            <summary>
+            当且仅当该网站应用已获得该用户的userinfo授权时，才会出现该字段。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.WeChat_Authorization_RequestEntity">
+            <summary>
+            Step1：获取Authorization Code
+            Url：http://wiki.connect.qq.com/%E4%BD%BF%E7%94%A8authorization_code%E8%8E%B7%E5%8F%96access_token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_Authorization_RequestEntity.response_type">
+            <summary>
+            填code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_Authorization_RequestEntity.appid">
+            <summary>
+            申请QQ登录成功后，分配给应用的appid。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_Authorization_RequestEntity.redirect_uri">
+            <summary>
+            请使用urlEncode对链接进行处理
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_Authorization_RequestEntity.state">
+            <summary>
+            用于保持请求和回调的状态，授权请求后原样带回给第三方。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议第三方带上该参数，可设置为简单的随机数加session进行校验
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_Authorization_RequestEntity.scope">
+            <summary>
+            应用授权作用域，拥有多个作用域用逗号（,）分隔，网页应用目前仅填写snsapi_login即
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.WeChat_Authorization_ResultEntity">
+            <summary>
+            用户允许授权后，将会重定向到redirect_uri的网址上，并且带上code和state参数
+            若用户禁止授权，则重定向后不会带上code参数，仅会带上state参数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_Authorization_ResultEntity.code">
+            <summary>
+            授权码
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_Authorization_ResultEntity.state">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.WeChat_OpenAPI_RequestEntity">
+            <summary>
+            开发者可以通过access_token和openid拉取用户信息了
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenAPI_RequestEntity.access_token">
+            <summary>
+            网页授权接口调用凭证,注意：此access_token与基础支持的access_token不同
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenAPI_RequestEntity.openid">
+            <summary>
+            用户的唯一标识
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenAPI_RequestEntity.lang">
+            <summary>
+            返回国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.WeChat_OpenId_get_user_info_ResultEntity">
+            <summary>
+            获取登录用户的昵称、头像、性别
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenId_get_user_info_ResultEntity.openid">
+            <summary>
+            用户的唯一标识
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenId_get_user_info_ResultEntity.nickname">
+            <summary>
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenId_get_user_info_ResultEntity.sex">
+            <summary>
+            用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenId_get_user_info_ResultEntity.province">
+            <summary>
+            用户个人资料填写的省份
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenId_get_user_info_ResultEntity.city">
+            <summary>
+            普通用户个人资料填写的城市
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenId_get_user_info_ResultEntity.country">
+            <summary>
+            国家，如中国为CN
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenId_get_user_info_ResultEntity.headimgurl">
+            <summary>
+            用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenId_get_user_info_ResultEntity.privilege">
+            <summary>
+            用户特权信息，json 数组，如微信沃卡用户为（chinaunicom）
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.WeChat_OpenId_get_user_info_ResultEntity.unionid">
+            <summary>
+            只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.WeChat">
+            <summary>
+            微信登录
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.WeChat.AuthorizationHref(Netnr.Login.WeChat_Authorization_RequestEntity)">
+            <summary>
+            Step1：获取Authorization Code
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.WeChat.AccessToken(Netnr.Login.WeChat_AccessToken_RequestEntity)">
+            <summary>
+            Step2：通过Authorization Code获取Access Token、openid
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.WeChat.Get_User_Info(Netnr.Login.WeChat_OpenAPI_RequestEntity)">
+            <summary>
+            Step3：获取用户信息
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Login.WeChatConfig">
+            <summary>
+            配置
+            
+            步骤：Authorization => AccessToken => OpenId => OpenAPI（UserInfo）
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeChatConfig.API_Authorization">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeChatConfig.API_AccessToken">
+            <summary>
+            POST
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeChatConfig.API_UserInfo">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeChatConfig.AppId">
+            <summary>
+            APP ID
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeChatConfig.AppSecret">
+            <summary>
+            APP Key
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeChatConfig.Redirect_Uri">
+            <summary>
+            回调
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Weibo_AccessToken_RequestEntity">
+            <summary>
+            Step2：Oauth2/access token
+            Url：http://open.weibo.com/wiki/Oauth2/access_token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_AccessToken_RequestEntity.client_id">
+            <summary>
+            申请应用时分配的AppKey。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_AccessToken_RequestEntity.client_secret">
+            <summary>
+            申请应用时分配的AppSecret。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_AccessToken_RequestEntity.grant_type">
+            <summary>
+            请求的类型，填写authorization_code
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_AccessToken_RequestEntity.code">
+            <summary>
+            grant_type为authorization_code时
+            调用authorize获得的code值。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_AccessToken_RequestEntity.redirect_uri">
+            <summary>
+            grant_type为authorization_code时
+            回调地址，需需与注册应用里的回调地址一致。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Weibo_AccessToken_ResultEntity">
+             <summary>
+            
+              {
+                 "access_token": "ACCESS_TOKEN",
+                 "expires_in": 1234,
+                 "remind_in":"798114",
+                 "uid":"12341234"
+              }
+             
+             </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_AccessToken_ResultEntity.access_token">
+            <summary>
+            用户授权的唯一票据，用于调用微博的开放接口，同时也是第三方应用验证微博用户登录的唯一票据，
+            第三方应用应该用该票据和自己应用内的用户建立唯一影射关系，来识别登录状态，不能使用本返回值里的UID字段来做登录识别。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_AccessToken_ResultEntity.expires_in">
+            <summary>
+            access_token的生命周期，单位是秒数。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_AccessToken_ResultEntity.uid">
+            <summary>
+            授权用户的UID，本字段只是为了方便开发者，减少一次user/show接口调用而返回的，
+            第三方应用不能用此字段作为用户登录状态的识别，只有access_token才是用户授权的唯一票据。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Weibo_Authorize_RequestEntity">
+            <summary>
+            Step1：Oauth2/authorize
+            Url：http://open.weibo.com/wiki/Oauth2/authorize
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_Authorize_RequestEntity.response_type">
+            <summary>
+            授权类型，此值固定为“code”。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_Authorize_RequestEntity.client_id">
+            <summary>
+            申请应用时分配的AppKey。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_Authorize_RequestEntity.redirect_uri">
+            <summary>
+            授权回调地址，站外应用需与设置的回调地址一致，站内应用需填写canvas page的地址。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_Authorize_RequestEntity.scope">
+            <summary>
+            申请scope权限所需参数，可一次申请多个scope权限，用逗号分隔。http://open.weibo.com/wiki/Scope
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_Authorize_RequestEntity.state">
+            <summary>
+            用于保持请求和回调的状态，在回调时，会在Query Parameter中回传该参数。
+            开发者可以用这个参数验证请求有效性，也可以记录用户请求授权页前的位置。
+            这个参数可用于防止跨站请求伪造（CSRF）攻击
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_Authorize_RequestEntity.display">
+            <summary>
+            授权页面的终端类型
+            
+            参数取值 类型说明
+            default	默认的授权页面，适用于web浏览器。
+            mobile 移动终端的授权页面，适用于支持html5的手机。注：使用此版授权页请用 https://open.weibo.cn/oauth2/authorize 授权接口
+            wap wap版授权页面，适用于非智能手机。
+            client 客户端版本授权页面，适用于PC桌面应用。
+            apponweibo 默认的站内应用授权页，授权后不返回access_token，只刷新站内应用父框架。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_Authorize_RequestEntity.forcelogin">
+            <summary>
+            是否强制用户重新登录，true：是，false：否。默认false。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_Authorize_RequestEntity.language">
+            <summary>
+            授权页语言，缺省为中文简体版，en为英文版。英文版测试中，开发者任何意见可反馈至 @微博API
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Weibo_Authorize_ResultEntity">
+            <summary>
+            请求
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_Authorize_ResultEntity.code">
+            <summary>
+            用于第二步调用oauth2/access_token接口，获取授权后的access token。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_Authorize_ResultEntity.state">
+            <summary>
+            如果传递参数，会回传该参数。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Weibo_GetTokenInfo_RequestEntity">
+            <summary>
+            Step2：Oauth2/get token info
+            Url：http://open.weibo.com/wiki/Oauth2/get_token_info
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_GetTokenInfo_RequestEntity.access_token">
+            <summary>
+            用户授权时生成的access_token。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Weibo_GetTokenInfo_ResultEntity">
+            <summary>
+            {   
+                "uid": 1073880650,
+                "appkey": 1352222456,
+                "scope": null,
+                "create_at": 1352267591,
+                "expire_in": 157679471
+            }
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_GetTokenInfo_ResultEntity.uid">
+            <summary>
+            授权用户的uid。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_GetTokenInfo_ResultEntity.appkey">
+            <summary>
+            access_token所属的应用appkey。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_GetTokenInfo_ResultEntity.scope">
+            <summary>
+            用户授权的scope权限。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_GetTokenInfo_ResultEntity.create_at">
+            <summary>
+            access_token的创建时间，从1970年到创建时间的秒数。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_GetTokenInfo_ResultEntity.expire_in">
+            <summary>
+            access_token的剩余时间，单位是秒数。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Weibo_UserShow_RequestEntity">
+            <summary>
+            Step4：users/show
+            Url：http://open.weibo.com/wiki/2/users/show
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_RequestEntity.access_token">
+            <summary>
+            采用OAuth授权方式为必填参数，OAuth授权后获得。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_RequestEntity.uid">
+            <summary>
+            需要查询的用户ID。
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_RequestEntity.screen_name">
+            <summary>
+            需要查询的用户昵称。
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Weibo_UserShow_ResultEntity">
+            <summary>
+            根据用户ID获取用户信息
+            Url：http://open.weibo.com/wiki/2/users/show
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.id">
+            <summary>
+            用户UID
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.idstr">
+            <summary>
+            字符串型的用户UID
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.screen_name">
+            <summary>
+            用户昵称
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.name">
+            <summary>
+            友好显示名称
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.province">
+            <summary>
+            用户所在省级ID
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.city">
+            <summary>
+            用户所在城市ID
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.location">
+            <summary>
+            用户所在地
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.description">
+            <summary>
+            用户个人描述
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.url">
+            <summary>
+            用户博客地址
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.profile_image_url">
+            <summary>
+            用户头像地址（中图），50×50像素
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.profile_url">
+            <summary>
+            用户的微博统一URL地址
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.domain">
+            <summary>
+            用户的个性化域名
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.weihao">
+            <summary>
+            用户的微号
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.gender">
+            <summary>
+            性别，m：男、f：女、n：未知
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.followers_count">
+            <summary>
+            {get;set;}粉丝数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.friends_count">
+            <summary>
+            关注数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.statuses_count">
+            <summary>
+            微博数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.favourites_count">
+            <summary>
+            收藏数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.created_at">
+            <summary>
+            用户创建（注册）时间
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.following">
+            <summary>
+            暂未支持
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.allow_all_act_msg">
+            <summary>
+            是否允许所有人给我发私信，true：是，false：否
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.geo_enabled">
+            <summary>
+            是否允许标识用户的地理位置，true：是，false：否
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.verified">
+            <summary>
+            是否是微博认证用户，即加V用户，true：是，false：否
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.verified_type">
+            <summary>
+            暂未支持
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.remark">
+            <summary>
+            用户备注信息，只有在查询用户关系时才返回此字段
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.status">
+            <summary>
+            用户的最近一条微博信息字段 详细
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.allow_all_comment">
+            <summary>
+            是否允许所有人对我的微博进行评论，true：是，false：否
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.avatar_large">
+            <summary>
+            用户头像地址（大图），180×180像素
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.avatar_hd">
+            <summary>
+            用户头像地址（高清），高清头像原图
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.verified_reason">
+            <summary>
+            认证原因
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.follow_me">
+            <summary>
+            boolean{get;set;}该用户是否关注当前登录用户，true：是，false：否
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.online_status">
+            <summary>
+            用户的在线状态，0：不在线、1：在线
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.bi_followers_count">
+            <summary>
+            用户的互粉数
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.Weibo_UserShow_ResultEntity.lang">
+            <summary>
+            用户当前的语言版本，zh-cn：简体中文，zh-tw：繁体中文，en：英语
+            </summary>
+        </member>
+        <member name="T:Netnr.Login.Weibo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Netnr.Login.Weibo.AuthorizeHref(Netnr.Login.Weibo_Authorize_RequestEntity)">
+            <summary>
+            Step1：请求用户授权Token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.Weibo.AccessToken(Netnr.Login.Weibo_AccessToken_RequestEntity)">
+            <summary>
+            Step2：获取授权过的Access Token
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.Weibo.GetTokenInfo(Netnr.Login.Weibo_GetTokenInfo_RequestEntity)">
+            <summary>
+            Step3：查询用户access_token的授权相关信息，包括授权时间，过期时间和scope权限。
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Netnr.Login.Weibo.UserShow(Netnr.Login.Weibo_UserShow_RequestEntity)">
+            <summary>
+            Step4：根据用户ID获取用户信息
+            </summary>
+            <param name="entity"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Netnr.Login.WeiboConfig">
+            <summary>
+            配置
+            
+            步骤：authorize => access_token => get_token_info => users/show
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeiboConfig.API_Authorize">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeiboConfig.API_AccessToken">
+            <summary>
+            POST
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeiboConfig.API_GetTokenInfo">
+            <summary>
+            POST
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeiboConfig.API_UserShow">
+            <summary>
+            GET
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeiboConfig.AppKey">
+            <summary>
+            App Key
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeiboConfig.AppSecret">
+            <summary>
+            App Secret
+            </summary>
+        </member>
+        <member name="F:Netnr.Login.WeiboConfig.Redirect_Uri">
+            <summary>
+            回调
+            </summary>
+        </member>
+    </members>
+</doc>
