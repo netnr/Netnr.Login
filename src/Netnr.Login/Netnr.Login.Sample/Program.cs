@@ -14,9 +14,11 @@ namespace Netnr.Login.Sample
             var lc = new LoginClient(LoginBase.LoginType.StackOverflow);
 
             //拷贝授权链接在浏览器打开，授权后拿到code，并手动赋值，手动赋值需解码
-            var url = lc.Auth();
+            var URL = lc.Auth();
+            Console.WriteLine(URL);
 
             var ar = new LoginBase.AuthorizeResult();
+
             ar.code = "";
             //此处打断点，赋值上面拿到的code再继续
             ar.code = ar.code.ToDecode();
@@ -26,7 +28,7 @@ namespace Netnr.Login.Sample
 
         public class LoginClient
         {
-            private LoginBase.LoginType? loginType;
+            private readonly LoginBase.LoginType? loginType;
 
             public LoginClient(LoginBase.LoginType _loginType)
             {

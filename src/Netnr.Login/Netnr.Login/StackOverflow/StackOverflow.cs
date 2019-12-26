@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Netnr.Login
+﻿namespace Netnr.Login
 {
     /// <summary>
     /// 钉钉
@@ -33,7 +31,6 @@ namespace Netnr.Login
         /// 获取 用户信息
         /// </summary>
         /// <param name="entity">签名参数</param>
-        /// <param name="code">临时授权码</param>
         /// <returns></returns>
         public static StackOverflow_User_ResultEntity User(StackOverflow_User_RequestEntity entity)
         {

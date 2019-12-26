@@ -25,7 +25,7 @@ namespace Netnr.Login
         /// 当前时间戳，单位是毫秒
         /// </summary>
         [Required]
-        public string timestamp { get; set; } = DateTime.Now.ToTimestamp() + "000";
+        public string timestamp { get; set; } = DateTime.Now.ToTimestamp(true).ToString();
 
         /// <summary>
         /// 通过appSecret计算出来的签名值

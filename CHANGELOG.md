@@ -1,5 +1,8 @@
 # 更新日志
 
+### [ⅴ3.5.1] - 2019-12-26
+- 修复 `Netnr.Core v1.2.2` 的拓展方法 `ToTimestamp` 与 钉钉（DingTalk） 冲突
+
 ### [ⅴ3.5.0] - 2019-11-12
 - 添加 StackOverflow
 

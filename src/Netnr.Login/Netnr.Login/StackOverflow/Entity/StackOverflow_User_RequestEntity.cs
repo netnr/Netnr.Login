@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Netnr.Login
+﻿namespace Netnr.Login
 {
     /// <summary>
     /// user
@@ -12,13 +10,22 @@ namespace Netnr.Login
         /// </summary>
         [Required]
         public string key { get; set; } = StackOverflowConfig.Key;
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
         [Required]
         public string site { get; set; } = "stackoverflow";
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Required]
         public string order { get; set; } = "desc";
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Required]
         public string sort { get; set; } = "reputation";
 
@@ -28,6 +35,9 @@ namespace Netnr.Login
         [Required]
         public string access_token { get; set; }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [Required]
         public string filter { get; set; } = "default";
 

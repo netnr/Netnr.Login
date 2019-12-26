@@ -2120,9 +2120,29 @@
             注册应用的Key
             </summary>
         </member>
+        <member name="P:Netnr.Login.StackOverflow_User_RequestEntity.site">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_RequestEntity.order">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_RequestEntity.sort">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:Netnr.Login.StackOverflow_User_RequestEntity.access_token">
             <summary>
             token
+            </summary>
+        </member>
+        <member name="P:Netnr.Login.StackOverflow_User_RequestEntity.filter">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:Netnr.Login.StackOverflow_User_ResultEntity">
@@ -2237,7 +2257,6 @@
             获取 用户信息
             </summary>
             <param name="entity">签名参数</param>
-            <param name="code">临时授权码</param>
             <returns></returns>
         </member>
         <member name="M:Netnr.Login.StackOverflow.AuthorizeHref(Netnr.Login.StackOverflow_Authorize_RequestEntity)">
@@ -2291,7 +2310,7 @@
         </member>
         <member name="T:Netnr.Login.TaoBao_AccessToken_RequestEntity">
             <summary>
-            Step2：Oauth2/access token
+            Step2：Oauth2/access token 
             </summary>
         </member>
         <member name="P:Netnr.Login.TaoBao_AccessToken_RequestEntity.client_id">
@@ -2355,7 +2374,7 @@
               "r2_valid": 1514644640120,
               "r1_valid": 1514646440120,
               "expires_in": 7776000
-            }
+            } 
              </summary>
         </member>
         <member name="P:Netnr.Login.TaoBao_AccessToken_ResultEntity.w1_expires_in">
@@ -2450,7 +2469,7 @@
         </member>
         <member name="T:Netnr.Login.TaoBao_Authorize_RequestEntity">
             <summary>
-            Step1：Oauth2/authorize
+            Step1：Oauth2/authorize 
             </summary>
         </member>
         <member name="P:Netnr.Login.TaoBao_Authorize_RequestEntity.response_type">
@@ -2484,7 +2503,7 @@
         </member>
         <member name="T:Netnr.Login.TaoBao">
             <summary>
-            淘宝（天猫）登录
+            淘宝（天猫）登录 
             </summary>
         </member>
         <member name="M:Netnr.Login.TaoBao.AuthorizeHref(Netnr.Login.TaoBao_Authorize_RequestEntity)">
@@ -2503,7 +2522,7 @@
         </member>
         <member name="T:Netnr.Login.TaoBaoConfig">
             <summary>
-            配置
+            配置 
             
             步骤：authorize => access_token
             </summary>
