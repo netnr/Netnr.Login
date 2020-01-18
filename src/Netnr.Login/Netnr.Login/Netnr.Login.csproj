@@ -9,8 +9,8 @@
 使用文档查看示例项目
 </Description>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects> 
-    <Version>3.5.1</Version>
-    <PackageReleaseNotes>- 修复 `Netnr.Core v1.2.2` 的拓展方法 `ToTimestamp` 与 钉钉（DingTalk） 冲突</PackageReleaseNotes>
+    <Version>3.5.2</Version>
+    <PackageReleaseNotes>修复 支付宝（AliPay）,必填验证改为生成签名之后</PackageReleaseNotes>
     <PackageTags>oauth2.0 login</PackageTags>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <DocumentationFile>Netnr.Login.xml</DocumentationFile>
@@ -28,7 +28,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Netnr.Core" Version="1.2.2" />
+    <PackageReference Include="Netnr.Core" Version="1.2.3.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 

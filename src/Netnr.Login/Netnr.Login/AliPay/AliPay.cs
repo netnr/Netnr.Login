@@ -42,12 +42,12 @@ namespace Netnr.Login
         /// <returns></returns>
         public static AliPay_AccessToken_ResultEntity AccessToken(AliPay_AccessToken_RequestEntity entity)
         {
+            Signature(entity);
+
             if (!LoginBase.IsValid(entity))
             {
                 return null;
             }
-
-            Signature(entity);
 
             string pars = LoginBase.EntityToPars(entity);
             string result = Core.HttpTo.Get(AliPayConfig.API_Gateway + "?" + pars);
@@ -73,12 +73,12 @@ namespace Netnr.Login
         /// <returns></returns>
         public static AliPay_User_ResultEntity User(AliPay_User_RequestEntity entity)
         {
+            Signature(entity);
+
             if (!LoginBase.IsValid(entity))
             {
                 return null;
             }
-
-            Signature(entity);
 
             string pars = LoginBase.EntityToPars(entity);
             string result = Core.HttpTo.Get(AliPayConfig.API_Gateway + "?" + pars);

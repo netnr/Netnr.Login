@@ -11,7 +11,7 @@ namespace Netnr.Login.Sample
     {
         static void Main(string[] args)
         {
-            var lc = new LoginClient(LoginBase.LoginType.StackOverflow);
+            var lc = new LoginClient(LoginBase.LoginType.AliPay);
 
             //拷贝授权链接在浏览器打开，授权后拿到code，并手动赋值，手动赋值需解码
             var URL = lc.Auth();
@@ -20,6 +20,7 @@ namespace Netnr.Login.Sample
             var ar = new LoginBase.AuthorizeResult();
 
             ar.code = "";
+            ar.auth_code = "";
             //此处打断点，赋值上面拿到的code再继续
             ar.code = ar.code.ToDecode();
 
@@ -220,11 +221,7 @@ namespace Netnr.Login.Sample
             /// <param name="authorizeResult">接收授权码、防伪参数</param>
             public void AuthCallback(LoginBase.AuthorizeResult authorizeResult)
             {
-                if (string.IsNullOrWhiteSpace(authorizeResult.code))
-                {
-                    //打开链接没登录授权
-                }
-                else
+                if (!string.IsNullOrWhiteSpace(authorizeResult.code) || !string.IsNullOrWhiteSpace(authorizeResult.auth_code))
                 {
                     //唯一标示
                     string OpenId = string.Empty;
