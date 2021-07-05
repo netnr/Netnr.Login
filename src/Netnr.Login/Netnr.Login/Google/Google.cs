@@ -24,11 +24,11 @@
                 "&response_type=",
                 entity.response_type,
                 "&scope=",
-                entity.scope.ToEncode(),
+                NetnrCore.ToEncode(entity.scope),
                 "&state=",
                 entity.state,
                 "&redirect_uri=",
-                entity.redirect_uri.ToEncode()});
+                NetnrCore.ToEncode(entity.redirect_uri)});
         }
 
         /// <summary>
@@ -45,7 +45,7 @@
 
             string pars = LoginBase.EntityToPars(entity);
 
-            var result = Core.HttpTo.Post(GoogleConfig.API_AccessToken, pars);
+            var result = NetnrCore.HttpTo.Post(GoogleConfig.API_AccessToken, pars);
 
             var outmo = LoginBase.ResultOutput<Google_AccessToken_ResultEntity>(result);
 
@@ -55,18 +55,16 @@
         /// <summary>
         /// 获取 用户信息
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="access_token"></param>
         /// <returns></returns>
-        public static Google_User_ResultEntity User(Google_User_RequestEntity entity)
+        public static Google_User_ResultEntity User(string access_token)
         {
-            if (!LoginBase.IsValid(entity))
+            if (string.IsNullOrWhiteSpace(access_token))
             {
                 return null;
             }
 
-            string pars = LoginBase.EntityToPars(entity);
-
-            var result = Core.HttpTo.Get(GoogleConfig.API_User + "?" + pars);
+            var result = NetnrCore.HttpTo.Get($"{GoogleConfig.API_User}?access_token={NetnrCore.ToEncode(access_token)}");
 
             var outmo = LoginBase.ResultOutput<Google_User_ResultEntity>(result);
 

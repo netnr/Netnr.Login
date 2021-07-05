@@ -28,7 +28,7 @@ namespace Netnr.Login
                 "&state=",
                 entity.state,
                 "&redirect_uri=",
-                entity.redirect_uri.ToEncode()});
+                NetnrCore.ToEncode(entity.redirect_uri)});
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Netnr.Login
             }
 
             string pars = LoginBase.EntityToPars(entity);
-            string result = Core.HttpTo.Post(WeiboConfig.API_AccessToken, pars);
+            string result = NetnrCore.HttpTo.Post(WeiboConfig.API_AccessToken, pars);
 
             var outmo = LoginBase.ResultOutput<Weibo_AccessToken_ResultEntity>(result);
 
@@ -54,17 +54,16 @@ namespace Netnr.Login
         /// <summary>
         /// Step3：查询用户access_token的授权相关信息，包括授权时间，过期时间和scope权限。
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="access_token"></param>
         /// <returns></returns>
-        public static Weibo_GetTokenInfo_ResultEntity GetTokenInfo(Weibo_GetTokenInfo_RequestEntity entity)
+        public static Weibo_GetTokenInfo_ResultEntity GetTokenInfo(string access_token)
         {
-            if (!LoginBase.IsValid(entity))
+            if (string.IsNullOrWhiteSpace(access_token))
             {
                 return null;
             }
 
-            string pars = LoginBase.EntityToPars(entity);
-            string result = Core.HttpTo.Post(WeiboConfig.API_GetTokenInfo, pars);
+            string result = NetnrCore.HttpTo.Post(WeiboConfig.API_GetTokenInfo, $"access_token={NetnrCore.ToEncode(access_token)}");
 
             var outmo = LoginBase.ResultOutput<Weibo_GetTokenInfo_ResultEntity>(result);
 
@@ -84,7 +83,7 @@ namespace Netnr.Login
             }
 
             string pars = LoginBase.EntityToPars(entity);
-            string result = Core.HttpTo.Get(WeiboConfig.API_UserShow + "?" + pars);
+            string result = NetnrCore.HttpTo.Get(WeiboConfig.API_UserShow + "?" + pars);
 
             var outmo = LoginBase.ResultOutput<Weibo_UserShow_ResultEntity>(result, new List<string> { "status" });
 

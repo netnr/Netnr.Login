@@ -28,7 +28,7 @@ namespace Netnr.Login
                 "&response_type=",
                 entity.response_type,
                 "&redirect_uri=",
-                entity.redirect_uri.ToEncode()});
+                NetnrCore.ToEncode(entity.redirect_uri)});
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Netnr.Login
 
             string pars = LoginBase.EntityToPars(entity);
 
-            string result = Core.HttpTo.Post(MicroSoftConfig.API_AccessToken, pars);
+            string result = NetnrCore.HttpTo.Post(MicroSoftConfig.API_AccessToken, pars);
 
             var outmo = LoginBase.ResultOutput<MicroSoft_AccessToken_ResultEntity>(result);
 
@@ -55,20 +55,18 @@ namespace Netnr.Login
         /// <summary>
         /// 获取 用户信息
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="access_token"></param>
         /// <returns></returns>
-        public static MicroSoft_User_ResultEntity User(MicroSoft_User_RequestEntity entity)
+        public static MicroSoft_User_ResultEntity User(string access_token)
         {
-            if (!LoginBase.IsValid(entity))
+            if (string.IsNullOrWhiteSpace(access_token))
             {
                 return null;
             }
 
-            string pars = LoginBase.EntityToPars(entity);
-
-            var hwr = Core.HttpTo.HWRequest(MicroSoftConfig.API_User + "?" + pars);
+            var hwr = NetnrCore.HttpTo.HWRequest($"{MicroSoftConfig.API_User}?access_token={NetnrCore.ToEncode(access_token)}");
             hwr.ContentType = null;
-            string result = Core.HttpTo.Url(hwr);
+            string result = NetnrCore.HttpTo.Url(hwr);
             var outmo = LoginBase.ResultOutput<MicroSoft_User_ResultEntity>(result, new List<string> { "emails" });
 
             return outmo;

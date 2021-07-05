@@ -24,11 +24,11 @@ namespace Netnr.Login
                 "?client_id=",
                 entity.client_id,
                 "&scope=",
-                entity.scope.ToEncode(),
+                NetnrCore.ToEncode(entity.scope),
                 "&state=",
                 entity.state,
                 "&redirect_uri=",
-                entity.redirect_uri.ToEncode()});
+                NetnrCore.ToEncode(entity.redirect_uri)});
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Netnr.Login
 
             string pars = LoginBase.EntityToPars(entity);
 
-            var hwr = Core.HttpTo.HWRequest(GitHubConfig.API_AccessToken, "POST", pars);
+            var hwr = NetnrCore.HttpTo.HWRequest(GitHubConfig.API_AccessToken, "POST", pars);
             hwr.Accept = "application/json";//application/xml
-            string result = Core.HttpTo.Url(hwr);
+            string result = NetnrCore.HttpTo.Url(hwr);
 
             var outmo = LoginBase.ResultOutput<GitHub_AccessToken_ResultEntity>(result);
 
@@ -57,20 +57,19 @@ namespace Netnr.Login
         /// <summary>
         /// 获取 用户信息
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="access_token"></param>
         /// <returns></returns>
-        public static GitHub_User_ResultEntity User(GitHub_User_RequestEntity entity)
+        public static GitHub_User_ResultEntity User(string access_token)
         {
-            if (!LoginBase.IsValid(entity))
+            if (string.IsNullOrWhiteSpace(access_token))
             {
                 return null;
             }
 
-            string pars = LoginBase.EntityToPars(entity);
-
-            var hwr = Core.HttpTo.HWRequest(GitHubConfig.API_User + "?" + pars);
-            hwr.UserAgent = entity.ApplicationName;
-            string result = Core.HttpTo.Url(hwr);
+            var hwr = NetnrCore.HttpTo.HWRequest(GitHubConfig.API_User);
+            hwr.Headers.Add("Authorization", $"token {access_token}");
+            hwr.UserAgent = "Netnr.Login";
+            string result = NetnrCore.HttpTo.Url(hwr);
 
             var outmo = LoginBase.ResultOutput<GitHub_User_ResultEntity>(result, new List<string> { "plan" });
 

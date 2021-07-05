@@ -24,7 +24,7 @@
                 "&client_id=",
                 entity.client_id,
                 "&redirect_uri=",
-                entity.redirect_uri.ToEncode(),
+                NetnrCore.ToEncode(entity.redirect_uri),
                 "&state=",
                 entity.state,
                 "&view=",
@@ -44,7 +44,7 @@
             }
 
             string pars = LoginBase.EntityToPars(entity);
-            string result = Core.HttpTo.Post(TaoBaoConfig.API_AccessToken, pars);
+            string result = NetnrCore.HttpTo.Post(TaoBaoConfig.API_AccessToken, pars);
             var outmo = LoginBase.ResultOutput<TaoBao_AccessToken_ResultEntity>(result);
 
             return outmo;

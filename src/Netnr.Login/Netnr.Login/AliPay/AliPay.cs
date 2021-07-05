@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
 using System.Text;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace Netnr.Login
 {
@@ -30,7 +31,7 @@ namespace Netnr.Login
                 "&state=",
                 entity.state,
                 "&redirect_uri=",
-                entity.redirect_uri.ToEncode(),
+                NetnrCore.ToEncode(entity.redirect_uri),
                 "&scope=",
                 entity.scope });
         }
@@ -50,20 +51,24 @@ namespace Netnr.Login
             }
 
             string pars = LoginBase.EntityToPars(entity);
-            string result = Core.HttpTo.Get(AliPayConfig.API_Gateway + "?" + pars);
+            string result = NetnrCore.HttpTo.Get(AliPayConfig.API_Gateway + "?" + pars);
 
-            AliPay_AccessToken_ResultEntity outmo = null;
+            string jkey = string.Empty;
             if (result.Contains("alipay_system_oauth_token_response"))
             {
-                outmo = result.ToJObject()["alipay_system_oauth_token_response"].ToJson().ToEntity<AliPay_AccessToken_ResultEntity>();
+                jkey = "alipay_system_oauth_token_response";
             }
-
             if (result.Contains("error_response"))
             {
-                outmo = result.ToJObject()["error_response"].ToJson().ToEntity<AliPay_AccessToken_ResultEntity>();
+                jkey = "error_response";
+            }
+            if (!string.IsNullOrEmpty(jkey))
+            {
+                var outmo = NetnrCore.ToEntity<AliPay_AccessToken_ResultEntity>(NetnrCore.ToJson(JObject.Parse(result)[jkey]));
+                return outmo;
             }
 
-            return outmo;
+            return null;
         }
 
         /// <summary>
@@ -81,20 +86,24 @@ namespace Netnr.Login
             }
 
             string pars = LoginBase.EntityToPars(entity);
-            string result = Core.HttpTo.Get(AliPayConfig.API_Gateway + "?" + pars);
+            string result = NetnrCore.HttpTo.Get(AliPayConfig.API_Gateway + "?" + pars);
 
-            AliPay_User_ResultEntity outmo = null;
+            string jkey = string.Empty;
             if (result.Contains("alipay_user_info_share_response"))
             {
-                outmo = result.ToJObject()["alipay_user_info_share_response"].ToJson().ToEntity<AliPay_User_ResultEntity>();
+                jkey = "alipay_user_info_share_response";
             }
-
             if (result.Contains("error_response"))
             {
-                outmo = result.ToJObject()["error_response"].ToJson().ToEntity<AliPay_User_ResultEntity>();
+                jkey = "error_response";
+            }
+            if (!string.IsNullOrEmpty(jkey))
+            {
+                var outmo = NetnrCore.ToEntity<AliPay_User_ResultEntity>(NetnrCore.ToJson(JObject.Parse(result)[jkey]));
+                return outmo;
             }
 
-            return outmo;
+            return null;
         }
 
         #region 签名
@@ -122,7 +131,7 @@ namespace Netnr.Login
             IEnumerator<KeyValuePair<string, string>> dem = sortedParams.GetEnumerator();
 
             // 第二步：把所有参数名和参数值串在一起
-            StringBuilder query = new StringBuilder("");
+            StringBuilder query = new("");
             while (dem.MoveNext())
             {
                 string key = dem.Current.Key;
@@ -177,8 +186,8 @@ namespace Netnr.Login
             byte[] MODULUS, E, D, P, Q, DP, DQ, IQ;
 
             // --------- Set up stream to decode the asn.1 encoded RSA private key ------
-            MemoryStream mem = new MemoryStream(privkey);
-            BinaryReader binr = new BinaryReader(mem);  //wrap Memory Stream with BinaryReader for easy reading
+            MemoryStream mem = new(privkey);
+            BinaryReader binr = new(mem);  //wrap Memory Stream with BinaryReader for easy reading
             try
             {
                 ushort twobytes = binr.ReadUInt16();
@@ -224,7 +233,7 @@ namespace Netnr.Login
 
 
                 // ------- create RSACryptoServiceProvider instance and initialize with public key -----
-                CspParameters CspParameters = new CspParameters();
+                CspParameters CspParameters = new();
                 CspParameters.Flags = CspProviderFlags.UseMachineKeyStore;
 
                 int bitLen = 1024;
@@ -233,8 +242,8 @@ namespace Netnr.Login
                     bitLen = 2048;
                 }
 
-                RSACryptoServiceProvider RSA = new RSACryptoServiceProvider(bitLen, CspParameters);
-                RSAParameters RSAparams = new RSAParameters();
+                RSACryptoServiceProvider RSA = new(bitLen, CspParameters);
+                RSAParameters RSAparams = new();
                 RSAparams.Modulus = MODULUS;
                 RSAparams.Exponent = E;
                 RSAparams.D = D;

@@ -12,7 +12,7 @@ namespace Netnr.Login
         /// </summary>
         public DingTalk_User_RequestEntity()
         {
-            signature = Core.CalcTo.HMAC_SHA256(timestamp, DingTalkConfig.appSecret);
+            signature = NetnrCore.CalcTo.HMAC_SHA256(timestamp, DingTalkConfig.appSecret);
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Netnr.Login
         /// 当前时间戳，单位是毫秒
         /// </summary>
         [Required]
-        public string timestamp { get; set; } = DateTime.Now.ToTimestamp(true).ToString();
+        public string timestamp { get; set; } = NetnrCore.ToTimestamp(DateTime.Now, true).ToString();
 
         /// <summary>
         /// 通过appSecret计算出来的签名值

@@ -1,17 +1,24 @@
-﻿/*
- * 这是测试代码，只为调通每一个接口，拿到 唯一标识
- * 实际应用中还要处理昵称、邮箱、头像等，可参考个站开源项目：https://github.com/netnr/blog
- */
-
+﻿using Microsoft.AspNetCore.Mvc;
+using Netnr.Login;
 using System;
 
-namespace Netnr.Login.Sample
+namespace Netnr.Test.Controllers
 {
-    class Program
+    /// <summary>
+    /// Netnr.Login
+    /// </summary>
+    public class LoginController : Controller
     {
-        static void Main(string[] args)
+        public IActionResult Index()
         {
-            var lc = new LoginClient(LoginBase.LoginType.AliPay);
+            Test1();
+
+            return Ok();
+        }
+
+        public void Test1()
+        {
+            var lc = new LoginClient(LoginBase.LoginType.GitHub);
 
             //拷贝授权链接在浏览器打开，授权后拿到code，并手动赋值，手动赋值需解码
             var URL = lc.Auth();
@@ -20,9 +27,9 @@ namespace Netnr.Login.Sample
             var ar = new LoginBase.AuthorizeResult();
 
             ar.code = "";
-            ar.auth_code = "";
             //此处打断点，赋值上面拿到的code再继续
             ar.code = ar.code.ToDecode();
+            ar.auth_code = ar.code;
 
             lc.AuthCallback(ar);
         }
@@ -52,8 +59,6 @@ namespace Netnr.Login.Sample
                 GitHubConfig.ClientID = "";
                 GitHubConfig.ClientSecret = "";
                 GitHubConfig.Redirect_Uri = "";
-                //申请的应用名称，非常重要
-                GitHubConfig.ApplicationName = "netnrf";
 
                 TaoBaoConfig.AppKey = "";
                 TaoBaoConfig.AppSecret = "";
@@ -153,7 +158,7 @@ namespace Netnr.Login.Sample
                             {
                                 reqe.state = authType + reqe.state;
                             }
-                            url = WeChat.AuthorizationHref(reqe);
+                            url = Login.WeChat.AuthorizationHref(reqe);
                         }
                         break;
                     case LoginBase.LoginType.DingTalk:
@@ -223,7 +228,7 @@ namespace Netnr.Login.Sample
             {
                 if (!string.IsNullOrWhiteSpace(authorizeResult.code) || !string.IsNullOrWhiteSpace(authorizeResult.auth_code))
                 {
-                    //唯一标示
+                    //唯一标识
                     string OpenId = string.Empty;
 
                     switch (loginType)
@@ -237,10 +242,7 @@ namespace Netnr.Login.Sample
                                 });
 
                                 //获取 OpendId
-                                var openidEntity = QQ.OpenId(new QQ_OpenId_RequestEntity()
-                                {
-                                    access_token = tokenEntity.access_token
-                                });
+                                var openidEntity = QQ.OpenId(tokenEntity.access_token);
 
                                 //获取 UserInfo
                                 _ = QQ.OpenId_Get_User_Info(new QQ_OpenAPI_RequestEntity()
@@ -262,10 +264,7 @@ namespace Netnr.Login.Sample
                                 });
 
                                 //获取 access_token 的授权信息
-                                var tokenInfoEntity = Weibo.GetTokenInfo(new Weibo_GetTokenInfo_RequestEntity()
-                                {
-                                    access_token = tokenEntity.access_token
-                                });
+                                var tokenInfoEntity = Weibo.GetTokenInfo(tokenEntity.access_token);
 
                                 //获取 users/show
                                 _ = Weibo.UserShow(new Weibo_UserShow_RequestEntity()
@@ -280,13 +279,13 @@ namespace Netnr.Login.Sample
                         case LoginBase.LoginType.WeChat:
                             {
                                 //获取 access_token
-                                var tokenEntity = WeChat.AccessToken(new WeChat_AccessToken_RequestEntity()
+                                var tokenEntity = Login.WeChat.AccessToken(new WeChat_AccessToken_RequestEntity()
                                 {
                                     code = authorizeResult.code
                                 });
 
                                 //获取 user
-                                _ = WeChat.Get_User_Info(new WeChat_OpenAPI_RequestEntity()
+                                _ = Login.WeChat.Get_User_Info(new WeChat_OpenAPI_RequestEntity()
                                 {
                                     access_token = tokenEntity.access_token,
                                     openid = tokenEntity.openid
@@ -305,10 +304,7 @@ namespace Netnr.Login.Sample
                                 });
 
                                 //获取 user
-                                var userEntity = GitHub.User(new GitHub_User_RequestEntity()
-                                {
-                                    access_token = tokenEntity.access_token
-                                });
+                                var userEntity = GitHub.User(tokenEntity.access_token);
 
                                 OpenId = userEntity.id.ToString();
                             }
@@ -333,10 +329,7 @@ namespace Netnr.Login.Sample
                                 });
 
                                 //获取 user
-                                var userEntity = MicroSoft.User(new MicroSoft_User_RequestEntity()
-                                {
-                                    access_token = tokenEntity.access_token
-                                });
+                                var userEntity = MicroSoft.User(tokenEntity.access_token);
 
                                 OpenId = userEntity.id.ToString();
                             }
@@ -358,10 +351,7 @@ namespace Netnr.Login.Sample
                                 });
 
                                 //获取 user
-                                var userEntity = Gitee.User(new Gitee_User_RequestEntity()
-                                {
-                                    access_token = tokenEntity.access_token
-                                });
+                                var userEntity = Gitee.User(tokenEntity.access_token);
 
                                 OpenId = userEntity.id.ToString();
                             }
@@ -375,10 +365,7 @@ namespace Netnr.Login.Sample
                                 });
 
                                 //获取 user
-                                var userEntity = Google.User(new Google_User_RequestEntity()
-                                {
-                                    access_token = tokenEntity.access_token
-                                });
+                                var userEntity = Google.User(tokenEntity.access_token);
 
                                 OpenId = userEntity.sub;
                             }

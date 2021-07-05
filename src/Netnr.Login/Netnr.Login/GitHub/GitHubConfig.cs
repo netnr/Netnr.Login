@@ -40,10 +40,5 @@
         /// 回调
         /// </summary>
         public static string Redirect_Uri = "";
-
-        /// <summary>
-        /// github 申请的应用名称
-        /// </summary>
-        public static string ApplicationName = "";
     }
 }

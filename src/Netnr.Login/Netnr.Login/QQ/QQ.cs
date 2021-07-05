@@ -30,7 +30,7 @@ namespace Netnr.Login
                 "&state=",
                 entity.state,
                 "&redirect_uri=",
-                entity.redirect_uri.ToEncode()});
+                NetnrCore.ToEncode(entity.redirect_uri)});
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Netnr.Login
 
             string pars = LoginBase.EntityToPars(entity);
 
-            string result = Core.HttpTo.Get(QQConfig.API_AccessToken_PC + "?" + pars);
+            string result = NetnrCore.HttpTo.Get(QQConfig.API_AccessToken_PC + "?" + pars);
 
             List<string> listPars = result.Split('&').ToList();
             var jo = new JObject();
@@ -65,20 +65,16 @@ namespace Netnr.Login
         /// <summary>
         /// Step3：获取用户OpenId
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="access_token"></param>
         /// <returns></returns>
-        public static QQ_OpenId_ResultEntity OpenId(QQ_OpenId_RequestEntity entity)
+        public static QQ_OpenId_ResultEntity OpenId(string access_token)
         {
-            var mo = new QQ_OpenId_ResultEntity();
-            var pis = mo.GetType().GetProperties();
-
-            if (!LoginBase.IsValid(entity))
+            if (string.IsNullOrWhiteSpace(access_token))
             {
                 return null;
             }
 
-            string pars = LoginBase.EntityToPars(entity);
-            string result = Core.HttpTo.Get(QQConfig.API_OpenID_PC + "?" + pars);
+            string result = NetnrCore.HttpTo.Get($"{QQConfig.API_OpenID_PC}?access_token={NetnrCore.ToEncode(access_token)}");
             //callback( {"client_id":"xx12196xx","openid":"09196B48CA96A8C8ED4FFxxCBxx59Dxx"} );
             result = result.Replace("callback( ", "").Replace(" );", "");
 
@@ -100,7 +96,7 @@ namespace Netnr.Login
             }
 
             string pars = LoginBase.EntityToPars(entity);
-            string result = Core.HttpTo.Get(QQConfig.API_Get_User_Info + "?" + pars);
+            string result = NetnrCore.HttpTo.Get(QQConfig.API_Get_User_Info + "?" + pars);
 
             var outmo = LoginBase.ResultOutput<QQ_OpenId_get_user_info_ResultEntity>(result.Replace("\r\n", ""));
 

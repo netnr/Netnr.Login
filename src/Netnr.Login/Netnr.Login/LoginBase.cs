@@ -7,7 +7,7 @@ namespace Netnr.Login
     /// <summary>
     /// 基础支持
     /// </summary>
-    public class LoginBase
+    public partial class LoginBase
     {
         /// <summary>
         /// 登录类型枚举
@@ -96,7 +96,7 @@ namespace Netnr.Login
                 string value = pi.GetValue(entity, null)?.ToString();
                 if (value != null)
                 {
-                    result += "&" + pi.Name + "=" + value.ToEncode();
+                    result += "&" + pi.Name + "=" + NetnrCore.ToEncode(value);
                 }
             }
             return result.TrimStart('&');

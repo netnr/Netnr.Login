@@ -26,7 +26,7 @@
                 "&state=",
                 entity.state,
                 "&redirect_uri=",
-                entity.redirect_uri.ToEncode()});
+                NetnrCore.ToEncode(entity.redirect_uri)});
         }
 
         /// <summary>
@@ -43,7 +43,7 @@
 
             string pars = LoginBase.EntityToPars(entity);
 
-            var result = Core.HttpTo.Post(GiteeConfig.API_AccessToken, pars);
+            var result = NetnrCore.HttpTo.Post(GiteeConfig.API_AccessToken, pars);
 
             var outmo = LoginBase.ResultOutput<Gitee_AccessToken_ResultEntity>(result);
 
@@ -53,18 +53,16 @@
         /// <summary>
         /// 获取 用户信息
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="access_token"></param>
         /// <returns></returns>
-        public static Gitee_User_ResultEntity User(Gitee_User_RequestEntity entity)
+        public static Gitee_User_ResultEntity User(string access_token)
         {
-            if (!LoginBase.IsValid(entity))
+            if (string.IsNullOrWhiteSpace(access_token))
             {
                 return null;
             }
 
-            string pars = LoginBase.EntityToPars(entity);
-
-            var result = Core.HttpTo.Get(GiteeConfig.API_User + "?" + pars);
+            var result = NetnrCore.HttpTo.Get($"{GiteeConfig.API_User}?access_token={NetnrCore.ToEncode(access_token)}");
 
             var outmo = LoginBase.ResultOutput<Gitee_User_ResultEntity>(result);
 

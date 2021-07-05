@@ -1,4 +1,6 @@
-﻿namespace Netnr.Login
+﻿using Newtonsoft.Json.Linq;
+
+namespace Netnr.Login
 {
     /// <summary>
     /// 钉钉
@@ -18,7 +20,7 @@
             }
 
             string pars = LoginBase.EntityToPars(entity);
-            var result = Core.HttpTo.Get(DingTalkConfig.API_AccessToken + "?" + pars);
+            var result = NetnrCore.HttpTo.Get(DingTalkConfig.API_AccessToken + "?" + pars);
 
             var outmo = LoginBase.ResultOutput<DingTalk_AccessToken_ResultEntity>(result);
 
@@ -40,14 +42,14 @@
 
             string pars = LoginBase.EntityToPars(entity);
 
-            var hwr = Core.HttpTo.HWRequest(DingTalkConfig.API_User + "?" + pars, "POST", new { tmp_auth_code = code }.ToJson());
+            var hwr = NetnrCore.HttpTo.HWRequest(DingTalkConfig.API_User + "?" + pars, "POST", NetnrCore.ToJson(new { tmp_auth_code = code }));
             hwr.ContentType = "application/json";
-            var result = Core.HttpTo.Url(hwr);
+            var result = NetnrCore.HttpTo.Url(hwr);
 
-            var ro = result.ToJObject();
+            var ro = JObject.Parse(result);
             if (ro["errcode"].ToString() == "0")
             {
-                result = result.ToJObject()["user_info"].ToJson();
+                result = NetnrCore.ToJson(JObject.Parse(result)["user_info"]);
             }
             else
             {
@@ -82,7 +84,7 @@
                 "&state=",
                 entity.state,
                 "&redirect_uri=",
-                entity.redirect_uri.ToEncode()});
+                NetnrCore.ToEncode(entity.redirect_uri)});
         }
 
         /// <summary>
@@ -108,7 +110,7 @@
                 "&state=",
                 entity.state,
                 "&redirect_uri=",
-                entity.redirect_uri.ToEncode()});
+                NetnrCore.ToEncode(entity.redirect_uri)});
         }
     }
 }
