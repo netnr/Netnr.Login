@@ -16,7 +16,7 @@ Install-Package Netnr.Login
     </tr>
     <tr>
         <td><img src="https://s1.netnr.eu.org/static/login/wechat.svg" height="30" title="微信/WeChat"></td>
-        <td><a target="_blank" href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419316505&token=&lang=zh_CN">参考文档</a></td>
+        <td><a target="_blank" href="https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html">参考文档</a></td>
         <td><a target="_blank" href="https://open.weixin.qq.com">应用申请</a></td>
     </tr>
     <tr>
@@ -26,7 +26,7 @@ Install-Package Netnr.Login
     </tr>
     <tr>
         <td><img src="https://s1.netnr.eu.org/static/login/github.svg" height="30" title="GitHub"></td>
-        <td><a target="_blank" href="https://docs.github.com/en/free-pro-team@latest/developers/apps/authorizing-oauth-apps">参考文档</a></td>
+        <td><a target="_blank" href="https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps">参考文档</a></td>
         <td><a target="_blank" href="https://github.com/settings/developers">应用申请</a></td>
     </tr>
     <tr>
@@ -46,17 +46,17 @@ Install-Package Netnr.Login
     </tr>
     <tr>
         <td><img src="https://s1.netnr.eu.org/static/login/dingtalk.svg" height="30" title="钉钉/DingTalk"></td>
-        <td><a target="_blank" href="https://ding-doc.dingtalk.com/doc#/serverapi2/kymkv6">参考文档</a></td>
+        <td><a target="_blank" href="https://developers.dingtalk.com/document/app/scan-qr-code-to-login-isvapp">参考文档</a></td>
         <td><a target="_blank" href="https://open-dev.dingtalk.com/#/loginMan">应用申请</a></td>
     </tr>
     <tr>
         <td><img src="https://s1.netnr.eu.org/static/login/google.svg" height="30" title="谷歌/Google"></td>
-        <td><a target="_blank" href="https://developers.google.com/identity/protocols/OpenIDConnect">参考文档</a></td>
+        <td><a target="_blank" href="https://developers.google.com/identity/protocols/oauth2/openid-connect">参考文档</a></td>
         <td><a target="_blank" href="https://console.developers.google.com/apis/credentials">应用申请</a></td>
     </tr>
     <tr>
         <td><img src="https://s1.netnr.eu.org/static/login/alipay.svg" height="30" title="支付宝/AliPay"></td>
-        <td><a target="_blank" href="https://docs.open.alipay.com/263/105809">参考文档</a></td>
+        <td><a target="_blank" href="https://opendocs.alipay.com/open/263/105809">参考文档</a></td>
         <td><a target="_blank" href="https://openhome.alipay.com/platform/developerIndex.htm">应用申请</a></td>
     </tr>
     <tr>
