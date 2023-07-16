@@ -169,15 +169,17 @@ public class Alipay
             }
 
             RSACryptoServiceProvider RSA = new(bitLen, CspParameters);
-            RSAParameters RSAparams = new();
-            RSAparams.Modulus = MODULUS;
-            RSAparams.Exponent = E;
-            RSAparams.D = D;
-            RSAparams.P = P;
-            RSAparams.Q = Q;
-            RSAparams.DP = DP;
-            RSAparams.DQ = DQ;
-            RSAparams.InverseQ = IQ;
+            RSAParameters RSAparams = new()
+            {
+                Modulus = MODULUS,
+                Exponent = E,
+                D = D,
+                P = P,
+                Q = Q,
+                DP = DP,
+                DQ = DQ,
+                InverseQ = IQ
+            };
             RSA.ImportParameters(RSAparams);
             return RSA;
         }

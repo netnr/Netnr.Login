@@ -1,5 +1,8 @@
 ﻿namespace Netnr.Login;
 
+/// <summary>
+/// Google
+/// </summary>
 public class Google
 {
     /// <summary>
@@ -69,7 +72,7 @@ public class GoogleAuthorizeModel : PublicAuthorizeModel
     /// 修改参数 Access_Type=offline 需配置 prompt=consent 提示用户同意，否则无法获取 refresh_token
     /// none 不显示任何身份验证或同意屏幕。不得使用其他值指定
     /// consent 提示用户同意
-    /// select_account 提示用户选择帐号
+    /// select_account 提示用户选择账号
     /// </summary>
     public string Prompt { get; set; } = "consent";
 }

@@ -1,5 +1,8 @@
 ﻿namespace Netnr.Login;
 
+/// <summary>
+/// DingTalk 钉钉
+/// </summary>
 public partial class DingTalk
 {
     /// <summary>

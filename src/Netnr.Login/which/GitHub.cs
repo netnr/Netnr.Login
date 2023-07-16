@@ -1,5 +1,8 @@
 ﻿namespace Netnr.Login;
 
+/// <summary>
+/// GitHub
+/// </summary>
 public class GitHub
 {
     /// <summary>

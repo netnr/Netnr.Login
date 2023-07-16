@@ -67,7 +67,7 @@ public class LoginTo
     /// <param name="varCall"></param>
     public static void InitConfig(Func<LoginWhich, string, object> varCall)
     {
-        var arr = new[] { typeof(QQ), typeof(Weixin), typeof(Weibo), typeof(Taobao), typeof(Alipay), typeof(DingTalk), typeof(Gitee), typeof(GitHub), typeof(Microsoft), typeof(StackOverflow), typeof(Google) };
+        var arr = new[] { typeof(QQ), typeof(Weixin), typeof(WeixinMP), typeof(Weibo), typeof(Taobao), typeof(Alipay), typeof(DingTalk), typeof(Gitee), typeof(GitHub), typeof(Microsoft), typeof(StackOverflow), typeof(Google) };
         foreach (var item in arr)
         {
             Enum.TryParse(item.Name, true, out LoginWhich loginType);
@@ -130,6 +130,16 @@ public class LoginTo
                                 result.Raw = AuthorizeLink(Weixin.API_Authorize, authModel);
                             }
                             break;
+                        case LoginWhich.WeixinMP:
+                            {
+                                var authModel = reqModel == null ? new WeixinMPAuthorizeModel() : reqModel as WeixinMPAuthorizeModel;
+                                if (stateCall != null)
+                                {
+                                    authModel.State = stateCall.Invoke(authModel.State);
+                                }
+                                result.Raw = AuthorizeLink(WeixinMP.API_Authorize, authModel);
+                            }
+                            break;
                         case LoginWhich.Weibo:
                             {
                                 var authModel = reqModel == null ? new WeiboAuthorizeModel() : reqModel as WeiboAuthorizeModel;
@@ -182,6 +192,16 @@ public class LoginTo
 
                                     result.Raw = AuthorizeLink(DingTalk.API_Authorize(), authModel);
                                 }
+                            }
+                            break;
+                        case LoginWhich.Feishu:
+                            {
+                                var authModel = reqModel == null ? new FeishuAuthorizeModel() : reqModel as FeishuAuthorizeModel;
+                                if (stateCall != null)
+                                {
+                                    authModel.State = stateCall.Invoke(authModel.State);
+                                }
+                                result.Raw = AuthorizeLink(Feishu.API_Authorize, authModel);
                             }
                             break;
                         case LoginWhich.Gitee:
@@ -255,7 +275,7 @@ public class LoginTo
                     var authModel = beforeResult as AuthorizeResult;
                     if (authModel == null && reqModel == null)
                     {
-                        throw new Exception($"请求 {step} 需要 {typeof(AuthorizeResult).Name} 或 自定义构建 AccessTokenModel");
+                        throw new Exception($"请求 {step} 需要 {nameof(AuthorizeResult)} 或 自定义构建 AccessTokenModel");
                     }
 
                     switch (which)
@@ -282,6 +302,18 @@ public class LoginTo
                                     };
                                 }
                                 result.Raw = Get(Weixin.API_AccessToken, sendModel);
+                            }
+                            break;
+                        case LoginWhich.WeixinMP:
+                            {
+                                if (reqModel is not WeixinMPAccessTokenModel sendModel)
+                                {
+                                    sendModel = new WeixinMPAccessTokenModel()
+                                    {
+                                        Code = authModel.Code
+                                    };
+                                }
+                                result.Raw = Get(WeixinMP.API_AccessToken, sendModel);
                             }
                             break;
                         case LoginWhich.Weibo:
@@ -338,6 +370,18 @@ public class LoginTo
                                     }
                                     result.Raw = Post(DingTalk.API_AccessToken, sendModel, true);
                                 }
+                            }
+                            break;
+                        case LoginWhich.Feishu:
+                            {
+                                if (reqModel is not FeishuAccessTokenModel sendModel)
+                                {
+                                    sendModel = new FeishuAccessTokenModel()
+                                    {
+                                        Code = authModel.Code
+                                    };
+                                }
+                                result.Raw = Post(Feishu.API_AccessToken, sendModel);
                             }
                             break;
                         case LoginWhich.Gitee:
@@ -447,6 +491,19 @@ public class LoginTo
                                 result.Raw = Get(Weixin.API_RefreshToken, sendModel);
                             }
                             break;
+                        case LoginWhich.WeixinMP:
+                            {
+                                if (reqModel is not WeixinMPRefreshTokenModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new WeixinMPRefreshTokenModel()
+                                    {
+                                        Refresh_Token = beforeModel.Doc.GetValue("refresh_token")
+                                    };
+                                }
+                                result.Raw = Get(WeixinMP.API_RefreshToken, sendModel);
+                            }
+                            break;
                         case LoginWhich.Taobao:
                             {
                                 if (reqModel is not TaobaoRefreshTokenModel sendModel)
@@ -492,6 +549,19 @@ public class LoginTo
                                     }
                                     result.Raw = Post(DingTalk.API_AccessToken, sendModel, true);
                                 }
+                            }
+                            break;
+                        case LoginWhich.Feishu:
+                            {
+                                if (reqModel is not FeishuRefreshTokenModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new FeishuRefreshTokenModel()
+                                    {
+                                        Refresh_Token = beforeModel.Doc.GetValue("refresh_token")
+                                    };
+                                }
+                                result.Raw = Post(Feishu.API_AccessToken, sendModel);
                             }
                             break;
                         case LoginWhich.Gitee:
@@ -598,6 +668,20 @@ public class LoginTo
                                 result.Raw = Get(Weixin.API_User, sendModel);
                             }
                             break;
+                        case LoginWhich.WeixinMP:
+                            {
+                                if (reqModel is not WeixinMPUserModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new WeixinMPUserModel()
+                                    {
+                                        Access_Token = beforeModel.Doc.GetValue("access_token"),
+                                        OpenId = beforeModel.Doc.GetValue("openid")
+                                    };
+                                }
+                                result.Raw = Get(WeixinMP.API_User, sendModel);
+                            }
+                            break;
                         case LoginWhich.Weibo:
                             {
                                 if (reqModel is not WeiboUserModel sendModel)
@@ -654,6 +738,19 @@ public class LoginTo
                                     }
                                     result.Raw = Get(DingTalk.API_User, sendModel, new Dictionary<string, string> { { "x-acs-dingtalk-access-token", sendModel.Access_Token } });
                                 }
+                            }
+                            break;
+                        case LoginWhich.Feishu:
+                            {
+                                if (reqModel is not FeishuUserModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new FeishuUserModel()
+                                    {
+                                        Access_Token = beforeModel.Doc.GetValue("access_token")
+                                    };
+                                }
+                                result.Raw = Get(Feishu.API_User, sendModel, new Dictionary<string, string> { { "Authorization", $"token {sendModel.Access_Token}" } });
                             }
                             break;
                         case LoginWhich.Gitee:
@@ -809,6 +906,7 @@ public class LoginTo
                 }
                 break;
             case LoginWhich.Weixin:
+            case LoginWhich.WeixinMP:
                 {
                     publicUser.UniqueId = userResult.Doc.GetValue("unionid");
                     publicUser.OpenId = userResult.Doc.GetValue("openid");
@@ -859,7 +957,7 @@ public class LoginTo
                     publicUser.UniqueId = userObj.GetValue("user_id");
                     publicUser.Avatar = userObj.GetValue("avatar");
                     publicUser.Nickname = userObj.GetValue("nick_name");
-                    publicUser.Gender = userObj.GetValue("gender").ToLower() == "m" ? 1 : 2;
+                    publicUser.Gender = userObj.GetValue("gender").Equals("m", StringComparison.OrdinalIgnoreCase) ? 1 : 2;
                     publicUser.Location = $"{userObj.GetValue("province")}{userObj.GetValue("city")}";
                 }
                 break;
@@ -879,8 +977,17 @@ public class LoginTo
                         publicUser.OpenId = userResult.Doc.GetValue("openId");
                         publicUser.Avatar = userResult.Doc.GetValue("avatarUrl");
                         publicUser.Nickname = userResult.Doc.GetValue("nick");
-                        publicUser.Email = userResult.Doc.GetValue("Email");
+                        publicUser.Email = userResult.Doc.GetValue("email");
                     }
+                }
+                break;
+            case LoginWhich.Feishu:
+                {
+                    publicUser.UniqueId = userResult.Doc.GetValue("union_id");
+                    publicUser.OpenId = userResult.Doc.GetValue("open_id");
+                    publicUser.Avatar = userResult.Doc.GetValue("avatar_big");
+                    publicUser.Name = userResult.Doc.GetValue("name");
+                    publicUser.Email = userResult.Doc.GetValue("email");
                 }
                 break;
             case LoginWhich.Gitee:
@@ -976,9 +1083,13 @@ public enum LoginWhich
     /// </summary>
     QQ,
     /// <summary>
-    /// 腾讯微信
+    /// 微信（开放平台）
     /// </summary>
     Weixin,
+    /// <summary>
+    /// 微信（公众平台）
+    /// </summary>
+    WeixinMP,
     /// <summary>
     /// 新浪微博
     /// </summary>
@@ -995,6 +1106,10 @@ public enum LoginWhich
     /// 钉钉
     /// </summary>
     DingTalk,
+    /// <summary>
+    /// 飞书
+    /// </summary>
+    Feishu,
     /// <summary>
     /// Gitee
     /// </summary>

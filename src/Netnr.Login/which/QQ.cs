@@ -1,7 +1,7 @@
 ﻿namespace Netnr.Login;
 
 /// <summary>
-/// qq
+/// QQ
 /// </summary>
 public class QQ
 {

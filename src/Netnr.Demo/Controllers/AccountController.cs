@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Netnr.Login;
+﻿using Netnr.Login;
 
-namespace Netnr.Demo.Controllers
+namespace Netnr.Demo.Controllers.LoginDemo
 {
     /// <summary>
     /// Netnr.Login v5
@@ -141,14 +140,16 @@ namespace Netnr.Demo.Controllers
         /// <param name="id">哪家</param>
         /// <param name="authResult">接收授权码</param>
         /// <returns></returns>
+        [HttpGet]
         public IActionResult AuthCallback([FromRoute] LoginWhich id, AuthorizeResult authResult)
         {
             //极简拿到最终用户信息
             var publicUser = LoginTo.Entry(id, authResult);
 
-            Console.WriteLine(publicUser.ToJson(true));
+            var result = publicUser.ToJson(true);
+            Console.WriteLine(result);
 
-            return Json(publicUser);
+            return Ok(result);
         }
 
         /// <summary>
@@ -157,25 +158,22 @@ namespace Netnr.Demo.Controllers
         /// <param name="id">哪家</param>
         /// <param name="authResult">接收授权码</param>
         /// <returns></returns>
+        [HttpGet]
         public IActionResult AuthCallback_Steps([FromRoute] LoginWhich id, AuthorizeResult authResult)
         {
             //含步骤信息
             (DocModel tokenResult, DocModel openidResult, DocModel userResult, PublicUserResult publicUser) = LoginTo.EntryOfSteps(id, authResult);
 
-            Console.WriteLine(tokenResult.Doc.ToJson(true));
-            if (openidResult != null)
+            var result = new
             {
-                //仅限 QQ
-                Console.WriteLine(openidResult.Doc.ToJson(true));
-            }
-            if (userResult != null)
-            {
-                //Taobao 无用户信息
-                Console.WriteLine(userResult.Doc.ToJson(true));
-            }
-            Console.WriteLine(publicUser.ToJson(true));
+                tokenResult,
+                openidResult,
+                userResult,
+                publicUser
+            }.ToJson(true);
+            Console.WriteLine(result);
 
-            return Json(publicUser);
+            return Ok(result);
         }
 
         /// <summary>
@@ -184,6 +182,7 @@ namespace Netnr.Demo.Controllers
         /// <param name="id">哪家</param>
         /// <param name="authResult">接收授权码</param>
         /// <returns></returns>
+        [HttpGet]
         public IActionResult AuthCallback_Step([FromRoute] LoginWhich? id, AuthorizeResult authResult)
         {
             try
@@ -211,12 +210,15 @@ namespace Netnr.Demo.Controllers
                     if (!(loginType == LoginWhich.DingTalk && DingTalk.IsOld))
                     {
                         tokenResult = LoginTo.EntryOfStep<AuthorizeResult, object>(loginType, LoginStep.AccessToken, beforeResult: authResult);
+                        Console.WriteLine($"\r\n{nameof(LoginStep.AccessToken)}");
+                        Console.WriteLine(tokenResult.Doc.ToJson(true));
 
                         //step: refresh token （可选，仅支持部分）
                         if (!new[] { LoginWhich.Weibo, LoginWhich.Taobao, LoginWhich.GitHub, LoginWhich.StackOverflow }.Contains(loginType)
                             && !(loginType == LoginWhich.Microsoft && Login.Microsoft.IsOld))
                         {
                             tokenResult = LoginTo.EntryOfStep<DocModel, object>(loginType, LoginStep.RefreshToken, beforeResult: tokenResult);
+                            Console.WriteLine($"\r\n{nameof(LoginStep.RefreshToken)}");
                             Console.WriteLine(tokenResult.Doc.ToJson(true));
                         }
                     }
@@ -234,20 +236,18 @@ namespace Netnr.Demo.Controllers
                         userResult = LoginTo.EntryOfStep<DocModel, object>(loginType, LoginStep.User, beforeResult: tokenResult);
                     }
 
-                    if (tokenResult != null)
-                    {
-                        Console.WriteLine(tokenResult.Doc.ToJson(true));
-                    }
                     if (openidResult != null)
                     {
+                        Console.WriteLine($"\r\n{nameof(LoginStep.OpenId)}");
                         Console.WriteLine(openidResult.Doc.ToJson(true));
                     }
                     if (userResult != null)
                     {
+                        Console.WriteLine($"\r\n{nameof(LoginStep.User)}");
                         Console.WriteLine(userResult.Doc.ToJson(true));
                     }
 
-                    return Ok();
+                    return Ok("Done!");
                 }
             }
             catch (Exception ex)
@@ -262,6 +262,7 @@ namespace Netnr.Demo.Controllers
         /// </summary>
         /// <param name="code">接收授权码</param>
         /// <returns></returns>
+        [HttpGet]
         public IActionResult AuthCallback_GitHub(string code)
         {
             //step: access token

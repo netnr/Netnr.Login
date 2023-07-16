@@ -1,5 +1,8 @@
 ﻿namespace Netnr.Login;
 
+/// <summary>
+/// Taobao 淘宝
+/// </summary>
 public class Taobao
 {
     /// <summary>

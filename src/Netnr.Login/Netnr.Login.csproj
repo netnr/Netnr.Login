@@ -3,18 +3,20 @@
 	<PropertyGroup>
 		<TargetFrameworks>net48;netstandard2.0;netstandard2.1</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Version>5.0.0</Version>
+		<Version>5.1.0</Version>
 		<Authors>netnr</Authors>
+		<Copyright>netnr</Copyright>
 		<Company>$(Authors)</Company>
-		<Description>第三方 OAuth2 授权登录，QQ、微信（Weixin）、微博（Weibo）、淘宝（Taobao）、支付宝（AliPay）、钉钉（DingTalk）、码云（Gitee）、GitHub、微软（Microsoft ）、StackOverflow、谷歌（Google）</Description>
-		<PackageProjectUrl>https://github.com/netnr</PackageProjectUrl>
 		<PackageIcon>favicon.png</PackageIcon>
-		<PackageReadmeFile>Netnr.Login.md</PackageReadmeFile>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<Description>第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、码云（Gitee）、GitHub、微软（Microsoft ）、StackOverflow、谷歌（Google）</Description>
+		<PackageProjectUrl>https://github.com/netnr</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/netnr</RepositoryUrl>
 		<PackageTags>oauth2.0;login</PackageTags>
-		<Copyright>netnr</Copyright>
-		<PackageReleaseNotes>DingTalk（钉钉）</PackageReleaseNotes>
+		<PackageReleaseNotes>飞书（Feishu）</PackageReleaseNotes>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
+		<PackageReadmeFile>Netnr.Login.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
@@ -53,7 +55,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="System.Text.Json" Version="6.0.5" />
+	  <PackageReference Include="System.Text.Json" Version="7.0.3" />
 	</ItemGroup>
 
 </Project>

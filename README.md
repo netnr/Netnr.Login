@@ -1,5 +1,5 @@
 # Netnr.Login
-第三方 OAuth2 授权登录，QQ、微信（Weixin）、微博（Weibo）、淘宝（Taobao）、支付宝（AliPay）、钉钉（DingTalk）、码云（Gitee）、GitHub、微软（Microsoft ）、StackOverflow、谷歌（Google）
+第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、码云（Gitee）、GitHub、微软（Microsoft ）、StackOverflow、谷歌（Google）
 
 ### 安装 (NuGet)
 ```
@@ -15,9 +15,14 @@ Install-Package Netnr.Login
         <td><a target="_blank" href="https://connect.qq.com/manage.html">应用申请</a></td>
     </tr>
     <tr>
-        <td><img src="https://gs.zme.ink/static/login/weixin.svg" height="30" title="微信/Weixin"></td>
+        <td><img src="https://gs.zme.ink/static/login/weixin.svg" height="30" title="微信开放平台/Weixin"></td>
         <td><a target="_blank" href="https://developers.weixin.qq.com/doc/oplatform/Website_App/WeChat_Login/Wechat_Login.html">参考文档</a></td>
         <td><a target="_blank" href="https://open.weixin.qq.com">应用申请</a></td>
+    </tr>
+    <tr>
+        <td><img src="https://gs.zme.ink/static/login/weixinmp.svg" height="30" title="微信公众平台/WeixinMP"></td>
+        <td><a target="_blank" href="https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html">参考文档</a></td>
+        <td><a target="_blank" href="https://mp.weixin.qq.com">应用申请</a></td>
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/weibo.svg" height="30" title="微博/Weibo"></td>
@@ -38,6 +43,11 @@ Install-Package Netnr.Login
         <td><img src="https://gs.zme.ink/static/login/dingtalk.svg" height="30" title="钉钉/DingTalk"></td>
         <td><a target="_blank" href="https://open.dingtalk.com/document/tutorial/scan-qr-code-to-log-on-to-third-party-websites">参考文档</a></td>
         <td><a target="_blank" href="https://open-dev.dingtalk.com/#/loginMan">应用申请</a></td>
+    </tr>
+    <tr>
+        <td><img src="https://gs.zme.ink/static/login/feishu.svg" height="30" title="钉钉/DingTalk"></td>
+        <td><a target="_blank" href="https://open.feishu.cn/document/common-capabilities/sso/web-application-sso/web-app-overview">参考文档</a></td>
+        <td><a target="_blank" href="https://open.feishu.cn/app">应用申请</a></td>
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/gitee.svg" height="30" title="码云/Gitee"></td>
@@ -70,8 +80,8 @@ Install-Package Netnr.Login
 - v5 版本全面重写，不兼容以前，调用方法更简单简洁
 - 移除 Newtonsoft.Json 组件，改为 System.Text.Json
 - 微软含新旧模式（注意新旧版本标识不相同）
-- 钉钉含新旧模式（新版本：企业内部开发 H5微应用；旧版本：移动应用接入 扫码登录）
-- 微信需要企业认证，没有测试，如有测试用户请反馈，谢谢
+- 钉钉含新旧模式（新：企业内部开发 H5微应用；旧：移动应用接入 扫码登录）
+- 待测试反馈的平台：微信公众平台（WeixinMP）
 
 ### 使用
 - v4 旧版本使用示例 `Netnr.Demo/Controllers/LoginController.cs`

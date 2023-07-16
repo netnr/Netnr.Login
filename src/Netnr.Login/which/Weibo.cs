@@ -1,5 +1,8 @@
 ﻿namespace Netnr.Login;
 
+/// <summary>
+/// Weibo 微博
+/// </summary>
 public class Weibo
 {
     /// <summary>

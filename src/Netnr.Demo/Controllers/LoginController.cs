@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Netnr.Login;
 
-namespace Netnr.Demo.Controllers
+namespace Netnr.Demo.Controllers.LoginDemo
 {
     /// <summary>
     /// Netnr.Login v4版本以前

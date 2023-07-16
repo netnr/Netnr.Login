@@ -1,5 +1,8 @@
 ﻿namespace Netnr.Login;
 
+/// <summary>
+/// Microsoft
+/// </summary>
 public partial class Microsoft
 {
     /// <summary>

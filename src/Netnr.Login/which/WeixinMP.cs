@@ -1,14 +1,14 @@
 ﻿namespace Netnr.Login;
 
 /// <summary>
-/// Weixin 微信（开放平台）
+/// WeixinMP 微信（公众平台）
 /// </summary>
-public class Weixin
+public class WeixinMP
 {
     /// <summary>
     /// GET
     /// </summary>
-    public static string API_Authorize { get; set; } = "https://open.weixin.qq.com/connect/qrconnect";
+    public static string API_Authorize { get; set; } = "https://open.weixin.qq.com/connect/oauth2/authorize";
 
     /// <summary>
     /// GET
@@ -44,50 +44,57 @@ public class Weixin
 /// <summary>
 /// authorize 请求参数
 /// </summary>
-public class WeixinAuthorizeModel : PublicAuthorizeModel
+public class WeixinMPAuthorizeModel : PublicAuthorizeModel
 {
-    public WeixinAuthorizeModel()
+    public WeixinMPAuthorizeModel()
     {
-        Redirect_Uri = Weixin.Redirect_Uri;
+        Redirect_Uri = WeixinMP.Redirect_Uri;
     }
 
     /// <summary>
     /// 应用唯一标识
     /// </summary>
-    public string AppId { get; set; } = Weixin.AppId;
+    public string AppId { get; set; } = WeixinMP.AppId;
 
     public string Response_Type { get; set; } = "code";
 
     /// <summary>
-    /// 应用授权作用域，拥有多个作用域用逗号（,）分隔，网页应用目前仅填写snsapi_login
+    /// 应用授权作用域
+    /// snsapi_base （不弹出授权页面，直接跳转，只能获取用户openid）
+    /// snsapi_userinfo （弹出授权页面，可通过 openid 拿到昵称、性别、所在地， 即使在未关注的情况下，只要用户授权，也能获取其信息 ）
     /// </summary>
-    public string Scope { get; set; } = "snsapi_login";
+    public string Scope { get; set; } = "snsapi_userinfo";
 
     /// <summary>
-    /// 界面语言，支持cn（中文简体）与en（英文），默认为cn
+    /// 无论直接打开还是做页面302重定向时候，必须带此参数
     /// </summary>
-    public string Lang { get; set; } = "cn";
+    public string API_Hash { get; set; } = "#wechat_redirect";
+
+    /// <summary>
+    /// 强制此次授权需要用户弹窗确认；默认为 false
+    /// </summary>
+    public string ForcePopup { get; set; } = "false";
 }
 
 /// <summary>
 /// access token 请求参数
 /// </summary>
-public class WeixinAccessTokenModel : PublicAccessTokenModel
+public class WeixinMPAccessTokenModel : PublicAccessTokenModel
 {
-    public WeixinAccessTokenModel()
+    public WeixinMPAccessTokenModel()
     {
-        Redirect_Uri = Weixin.Redirect_Uri;
+        Redirect_Uri = WeixinMP.Redirect_Uri;
     }
 
     /// <summary>
     /// 应用唯一标识
     /// </summary>
-    public string AppId { get; set; } = Weixin.AppId;
+    public string AppId { get; set; } = WeixinMP.AppId;
 
     /// <summary>
     /// 应用密钥AppSecret
     /// </summary>
-    public string Secret { get; set; } = Weixin.AppSecret;
+    public string Secret { get; set; } = WeixinMP.AppSecret;
 
     public string Grant_Type { get; set; } = "authorization_code";
 }
@@ -95,12 +102,12 @@ public class WeixinAccessTokenModel : PublicAccessTokenModel
 /// <summary>
 /// refresh token 请求参数
 /// </summary>
-public class WeixinRefreshTokenModel 
+public class WeixinMPRefreshTokenModel
 {
     /// <summary>
     /// 应用唯一标识
     /// </summary>
-    public string AppId { get; set; } = Weixin.AppId;
+    public string AppId { get; set; } = WeixinMP.AppId;
 
     public string Grant_Type { get; set; } = "refresh_token";
 
@@ -113,7 +120,7 @@ public class WeixinRefreshTokenModel
 /// <summary>
 /// user 请求参数
 /// </summary>
-public class WeixinUserModel
+public class WeixinMPUserModel
 {
     /// <summary>
     /// 调用凭证
