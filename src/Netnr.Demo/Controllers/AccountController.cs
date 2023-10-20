@@ -57,27 +57,70 @@ namespace Netnr.Demo.Controllers.LoginDemo
             #endregion
 
             #region 自动读取 appsettings.json 
-
+            
             /*
-                 {
-                    "OAuthLogin": {
-                        "Redirect_Uri": "https://localhost/account/authcallback/{0}",
-                        "QQ": {
-                            "AppId": "123",
-                            "AppKey": "789789"
-                        },
-                        "DingTalk": {
-                            "AppId": "dingoai",
-                            "AppSecret": "n_xu",
-                            "IsOld": true
-                        },
-                        "Microsoft": {
-                          "ClientId": "uuid",
-                          "ClientSecret": "secret",
-                          "IsOld": true
-                        }
-                   }
+
+              "OAuthLogin": {
+                //是否启用
+                "enable": true,
+                "Redirect_Uri": "https://localhost/account/authcallback/{0}", //回调地址
+                "QQ": {
+                  "AppId": "123",
+                  "AppKey": "456"
+                },
+                "Weixin": {
+                  "AppId": "123",
+                  "AppSecret": "456"
+                },
+                "WeixinMP": {
+                  "AppId": "123",
+                  "AppSecret": "456"
+                },
+                "Weibo": {
+                  "AppKey": "123",
+                  "AppSecret": "456"
+                },
+                "Taobao": {
+                  "AppKey": "123",
+                  "AppSecret": "456"
+                },
+                "Alipay": {
+                  "AppId": "123",
+                  "AppPrivateKey": "456"
+                },
+                "DingTalk": {
+                  "AppId": "123",
+                  "AppSecret": "456",
+                  "IsOld": true
+                },
+                "Feishu": {
+                  "ClientId": "123",
+                  "ClientSecret": "456"
+                },
+                "Gitee": {
+                  "ClientId": "123",
+                  "ClientSecret": "456"
+                },
+                "GitHub": {
+                  "ClientId": "123",
+                  "ClientSecret": "456"
+                },
+                "Microsoft": {
+                  "ClientId": "123",
+                  "ClientSecret": "456",
+                  "IsOld": true
+                },
+                "StackOverflow": {
+                  "ClientId": "123",
+                  "ClientSecret": "456",
+                  "Key": "kkk"
+                },
+                "Google": {
+                  "ClientId": "123",
+                  "ClientSecret": "456"
                 }
+              }
+
             */
 
             // AppTo.GetValue 是从 IConfiguration 对象取值的封装
