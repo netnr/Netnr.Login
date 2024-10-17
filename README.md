@@ -1,5 +1,5 @@
 # Netnr.Login
-第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、码云（Gitee）、GitHub、微软（Microsoft ）、StackOverflow、谷歌（Google）
+第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、AtomGit、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、ORCID
 
 ### 安装 (NuGet)
 ```
@@ -50,6 +50,11 @@ Install-Package Netnr.Login
         <td><a target="_blank" href="https://open.feishu.cn/app">应用申请</a></td>
     </tr>
     <tr>
+        <td><img src="https://gs.zme.ink/static/login/atomgit.svg" height="30" title="AtomGit"></td>
+        <td><a target="_blank" href="https://docs.atomgit.com/oauth/">参考文档</a></td>
+        <td><a target="_blank" href="https://atomgit.com">应用申请</a></td>
+    </tr>
+    <tr>
         <td><img src="https://gs.zme.ink/static/login/gitee.svg" height="30" title="码云/Gitee"></td>
         <td><a target="_blank" href="https://gitee.com/api/v5/oauth_doc">参考文档</a></td>
         <td><a target="_blank" href="https://gitee.com/oauth/applications">应用申请</a></td>
@@ -58,6 +63,11 @@ Install-Package Netnr.Login
         <td><img src="https://gs.zme.ink/static/login/github.svg" height="30" title="GitHub"></td>
         <td><a target="_blank" href="https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps">参考文档</a></td>
         <td><a target="_blank" href="https://github.com/settings/developers">应用申请</a></td>
+    </tr>
+    <tr>
+        <td><img src="https://gs.zme.ink/static/login/gitlab.svg" height="30" title="GitLab"></td>
+        <td><a target="_blank" href="https://docs.gitlab.com/ee/api/oauth2.html">参考文档</a></td>
+        <td><a target="_blank" href="https://gitlab.com/oauth/applications">应用申请</a></td>
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/microsoft.svg" height="30" title="微软/Microsoft"></td>
@@ -74,15 +84,78 @@ Install-Package Netnr.Login
         <td><a target="_blank" href="https://developers.google.com/identity/protocols/oauth2/web-server">参考文档</a></td>
         <td><a target="_blank" href="https://console.developers.google.com/apis/credentials">应用申请</a></td>
     </tr>
+    <tr>
+        <td><img src="https://gs.zme.ink/static/login/orcid.svg" height="30" title="ORCID"></td>
+        <td><a target="_blank" href="https://github.com/ORCID/ORCID-Source/blob/main/orcid-web/ORCID_AUTH_WITH_OPENID_CONNECT.md">参考文档</a></td>
+        <td><a target="_blank" href="https://orcid.org/developer-tools">应用申请</a></td>
+    </tr>    
 </table>
 
 ### 变更
-- v5 版本全面重写，不兼容以前，调用方法更简单简洁
-- 移除 Newtonsoft.Json 组件，改为 System.Text.Json
-- 微软含新旧模式（注意新旧版本标识不相同）
-- 钉钉含新旧模式（新：企业内部开发 H5微应用；旧：移动应用接入 扫码登录）
-- 待测试反馈的平台：微信公众平台（WeixinMP）
+v5 版本全面重写，不兼容以前，调用方法更简单简洁  
+移除 Newtonsoft.Json 组件，改为 System.Text.Json  
+微软含新旧模式（注意新旧版本标识不相同）  
+钉钉含新旧模式（新：企业内部开发 H5微应用；旧：移动应用接入 扫码登录）  
+
+#### 2024-10-17
+新增 AtomGit、ORCID、GitLab  
+删除 字段 PublicUserResult.`Gender`  
+修改 字段 PublicUserResult.`Intro` 为 `Bio`  
 
 ### 使用
-- v4 旧版本使用示例 `Netnr.Demo/Controllers/LoginController.cs`
-- 新版本使用示例 `Netnr.Demo/Controllers/AccountController.cs`
+v4 旧版本使用示例 `Netnr.Demo/Controllers/LoginController.cs`
+
+极简调用，详情参考 `Netnr.Demo/Controllers/AccountController.cs`
+```csharp
+// 初始化配置，推荐使用 LoginTo.InitConfig 方法读取配置
+
+QQ.AppId = "";
+QQ.AppKey = "";
+QQ.Redirect_Uri = "https://devd.io:6651/account/authcallback/qq";
+```
+
+```csharp
+/// <summary>
+/// 登录、绑定
+/// </summary>
+/// <param name="id">哪家</param>
+/// <returns></returns>
+[HttpGet]
+public IActionResult Auth([FromRoute] LoginWhich? id)
+{
+    if (id.HasValue)
+    {
+        //根据 state 字段加前缀 login 或 bind 来区分
+        DocModel authResult = LoginTo.EntryOfStep<object, object>(id.Value, LoginStep.Authorize, stateCall: (state) => $"login_{state}");
+        if (!string.IsNullOrEmpty(authResult.Raw))
+        {
+            return Redirect(authResult.Raw);
+        }
+    }
+
+    return BadRequest();
+}
+```
+
+```csharp
+/// <summary>
+/// 回调
+/// </summary>
+/// <param name="id">哪家</param>
+/// <param name="authResult">接收授权码</param>
+/// <returns></returns>
+[HttpGet]
+public IActionResult AuthCallback([FromRoute] LoginWhich id, AuthorizeResult authResult)
+{
+    //极简拿到最终用户信息，参考详情可得到步骤信息
+    var publicUser = LoginTo.Entry(id, authResult);
+
+    var result = publicUser.ToJson(true);
+    Console.WriteLine(result);
+
+    return Ok(result);
+}
+```
+
+### 注意
+默认构建的授权调整链接是基于 PC，而有些是区分移动端、扫码等，需要根据客户端来源构建对应的授权跳转链接。

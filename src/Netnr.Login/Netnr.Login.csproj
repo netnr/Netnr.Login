@@ -1,61 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net48;netstandard2.0;netstandard2.1</TargetFrameworks>
+		<TargetFrameworks>net462;netstandard2;netstandard2.1;net6;net7;net8</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
-		<Version>5.1.0</Version>
+		<Version>5.2.0</Version>
 		<Authors>netnr</Authors>
 		<Copyright>netnr</Copyright>
 		<Company>$(Authors)</Company>
 		<PackageIcon>favicon.png</PackageIcon>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Description>第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、码云（Gitee）、GitHub、微软（Microsoft ）、StackOverflow、谷歌（Google）</Description>
+		<Description>第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、AtomGit、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、ORCID</Description>
 		<PackageProjectUrl>https://github.com/netnr</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/netnr</RepositoryUrl>
 		<PackageTags>oauth2.0;login</PackageTags>
-		<PackageReleaseNotes>飞书（Feishu）</PackageReleaseNotes>
+		<PackageReleaseNotes>新增 AtomGit、ORCID、GitLab</PackageReleaseNotes>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<PackageReadmeFile>Netnr.Login.md</PackageReadmeFile>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
-	  <NoWarn>1701;1702;1591</NoWarn>
+	<PropertyGroup>
+		<NoWarn>1701;1702;1591</NoWarn>
+		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
-	  <NoWarn>1701;1702;1591</NoWarn>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-	  <NoWarn>1701;1702;1591</NoWarn>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-	  <NoWarn>1701;1702;1591</NoWarn>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.1|AnyCPU'">
-	  <NoWarn>1701;1702;1591</NoWarn>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.1|AnyCPU'">
-	  <NoWarn>1701;1702;1591</NoWarn>
-	</PropertyGroup>
-
-	<ItemGroup>
-	  <None Include="..\..\..\docs\Netnr.Login.md">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
-	  <None Include="..\Netnr.Blog.Web\wwwroot\favicon.png">
-	    <Pack>True</Pack>
-	    <PackagePath>\</PackagePath>
-	  </None>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Include="System.Text.Json" Version="7.0.3" />
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2'">
+		<PackageReference Include="System.Text.Json" Version="8.0.5" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 	</ItemGroup>
 
 </Project>

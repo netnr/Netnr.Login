@@ -1,6 +1,7 @@
 ﻿global using System;
 global using System.IO;
 global using System.Net;
+global using System.Linq;
 global using System.Reflection;
 global using System.ComponentModel;
 global using System.Globalization;
@@ -16,21 +17,16 @@ namespace Netnr.Login;
 /// <summary>
 /// Common
 /// </summary>
-internal static class NetnrCore
+internal static partial class NetnrCore
 {
     /// <summary>
     /// STJ 时间格式化
     /// </summary>
-    public class DateTimeJsonConverterTo : JsonConverter<DateTime>
+    public class DateTimeJsonConverterTo(string formatter = DateTimeJsonConverterTo.DefaultFormatter) : JsonConverter<DateTime>
     {
         public const string DefaultFormatter = "yyyy-MM-dd HH:mm:ss.fff";
 
-        public string Formatter { get; set; }
-
-        public DateTimeJsonConverterTo(string formatter = DefaultFormatter)
-        {
-            Formatter = formatter;
-        }
+        public string Formatter { get; set; } = formatter;
 
         public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
@@ -286,7 +282,7 @@ internal static class NetnrCore
 /// <summary>
 /// HTTP请求
 /// </summary>
-internal class HttpTo
+internal partial class HttpTo
 {
     /// <summary>
     /// HttpWebRequest对象
@@ -298,7 +294,9 @@ internal class HttpTo
     /// <returns></returns>
     public static HttpWebRequest HWRequest(string url, string type = "GET", string data = null, string charset = "utf-8")
     {
+#pragma warning disable SYSLIB0014
         var request = (HttpWebRequest)WebRequest.Create(url);
+#pragma warning restore SYSLIB0014
 
         request.Method = type;
         request.KeepAlive = true;
@@ -312,7 +310,7 @@ internal class HttpTo
         {
             //发送内容
             byte[] bytes = Encoding.GetEncoding(charset).GetBytes(data);
-            request.ContentLength = Encoding.GetEncoding(charset).GetBytes(data).Length;
+            request.ContentLength = bytes.Length;
             Stream outputStream = request.GetRequestStream();
             outputStream.Write(bytes, 0, bytes.Length);
             outputStream.Close();
@@ -358,32 +356,7 @@ internal class HttpTo
             Console.WriteLine($"Error Code: {errCode}");
             Console.WriteLine(result);
 
-            throw e;
+            throw;
         }
-    }
-
-    /// <summary>
-    /// GET请求
-    /// </summary>
-    /// <param name="url">地址</param>
-    /// <param name="charset">编码，默认utf-8</param>
-    /// <returns></returns>
-    public static string Get(string url, string charset = "utf-8")
-    {
-        var request = HWRequest(url, "GET", null, charset);
-        return Url(request, charset);
-    }
-
-    /// <summary>
-    /// POST请求
-    /// </summary>
-    /// <param name="url">地址</param>
-    /// <param name="data">发送数据</param>
-    /// <param name="charset">编码，默认utf-8</param>
-    /// <returns></returns>
-    public static string Post(string url, string data, string charset = "utf-8")
-    {
-        var request = HWRequest(url, "POST", data, charset);
-        return Url(request, charset);
     }
 }

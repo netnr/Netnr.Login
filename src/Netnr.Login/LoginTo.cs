@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Netnr.Login;
+﻿namespace Netnr.Login;
 
 /// <summary>
 /// 登录
@@ -67,7 +65,7 @@ public class LoginTo
     /// <param name="varCall"></param>
     public static void InitConfig(Func<LoginWhich, string, object> varCall)
     {
-        var arr = new[] { typeof(QQ), typeof(Weixin), typeof(WeixinMP), typeof(Weibo), typeof(Taobao), typeof(Alipay), typeof(DingTalk), typeof(Gitee), typeof(GitHub), typeof(Microsoft), typeof(StackOverflow), typeof(Google) };
+        var arr = new[] { typeof(QQ), typeof(Weixin), typeof(WeixinMP), typeof(Weibo), typeof(Taobao), typeof(Alipay), typeof(DingTalk), typeof(AtomGit), typeof(Gitee), typeof(GitHub), typeof(GitLab), typeof(Microsoft), typeof(StackOverflow), typeof(Google), typeof(ORCID) };
         foreach (var item in arr)
         {
             Enum.TryParse(item.Name, true, out LoginWhich loginType);
@@ -204,6 +202,16 @@ public class LoginTo
                                 result.Raw = AuthorizeLink(Feishu.API_Authorize, authModel);
                             }
                             break;
+                        case LoginWhich.AtomGit:
+                            {
+                                var authModel = reqModel == null ? new AtomGitAuthorizeModel() : reqModel as AtomGitAuthorizeModel;
+                                if (stateCall != null)
+                                {
+                                    authModel.State = stateCall.Invoke(authModel.State);
+                                }
+                                result.Raw = AuthorizeLink(AtomGit.API_Authorize, authModel);
+                            }
+                            break;
                         case LoginWhich.Gitee:
                             {
                                 var authModel = reqModel == null ? new GiteeAuthorizeModel() : reqModel as GiteeAuthorizeModel;
@@ -222,6 +230,16 @@ public class LoginTo
                                     authModel.State = stateCall.Invoke(authModel.State);
                                 }
                                 result.Raw = AuthorizeLink(GitHub.API_Authorize, authModel);
+                            }
+                            break;
+                        case LoginWhich.GitLab:
+                            {
+                                var authModel = reqModel == null ? new GitLabAuthorizeModel() : reqModel as GitLabAuthorizeModel;
+                                if (stateCall != null)
+                                {
+                                    authModel.State = stateCall.Invoke(authModel.State);
+                                }
+                                result.Raw = AuthorizeLink(GitLab.API_Authorize, authModel);
                             }
                             break;
                         case LoginWhich.Microsoft:
@@ -264,6 +282,16 @@ public class LoginTo
                                     authModel.State = stateCall.Invoke(authModel.State);
                                 }
                                 result.Raw = AuthorizeLink(Google.API_Authorize, authModel);
+                            }
+                            break;
+                        case LoginWhich.ORCID:
+                            {
+                                var authModel = reqModel == null ? new ORCIDAuthorizeModel() : reqModel as ORCIDAuthorizeModel;
+                                if (stateCall != null)
+                                {
+                                    authModel.State = stateCall.Invoke(authModel.State);
+                                }
+                                result.Raw = AuthorizeLink(ORCID.API_Authorize, authModel);
                             }
                             break;
                     }
@@ -384,6 +412,18 @@ public class LoginTo
                                 result.Raw = Post(Feishu.API_AccessToken, sendModel);
                             }
                             break;
+                        case LoginWhich.AtomGit:
+                            {
+                                if (reqModel is not AtomGitAccessTokenModel sendModel)
+                                {
+                                    sendModel = new AtomGitAccessTokenModel()
+                                    {
+                                        Code = authModel.Code
+                                    };
+                                }
+                                result.Raw = Post(AtomGit.API_AccessToken, sendModel);
+                            }
+                            break;
                         case LoginWhich.Gitee:
                             {
                                 if (reqModel is not GiteeAccessTokenModel sendModel)
@@ -406,6 +446,18 @@ public class LoginTo
                                     };
                                 }
                                 result.Raw = Post(GitHub.API_AccessToken, sendModel);
+                            }
+                            break;
+                        case LoginWhich.GitLab:
+                            {
+                                if (reqModel is not GitLabAccessTokenModel sendModel)
+                                {
+                                    sendModel = new GitLabAccessTokenModel()
+                                    {
+                                        Code = authModel.Code
+                                    };
+                                }
+                                result.Raw = Post(GitLab.API_AccessToken, sendModel);
                             }
                             break;
                         case LoginWhich.Microsoft:
@@ -456,6 +508,18 @@ public class LoginTo
                                     };
                                 }
                                 result.Raw = Post(Google.API_AccessToken, sendModel);
+                            }
+                            break;
+                        case LoginWhich.ORCID:
+                            {
+                                if (reqModel is not ORCIDAccessTokenModel sendModel)
+                                {
+                                    sendModel = new ORCIDAccessTokenModel()
+                                    {
+                                        Code = authModel.Code
+                                    };
+                                }
+                                result.Raw = Post(ORCID.API_AccessToken, sendModel);
                             }
                             break;
                     }
@@ -564,6 +628,19 @@ public class LoginTo
                                 result.Raw = Post(Feishu.API_AccessToken, sendModel);
                             }
                             break;
+                        case LoginWhich.AtomGit:
+                            {
+                                if (reqModel is not AtomGitRefreshTokenModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new AtomGitRefreshTokenModel()
+                                    {
+                                        Refresh_Token = beforeModel.Doc.GetValue("refresh_token")
+                                    };
+                                }
+                                result.Raw = Post(AtomGit.API_AccessToken, sendModel);
+                            }
+                            break;
                         case LoginWhich.Gitee:
                             {
                                 if (reqModel is not GiteeRefreshTokenModel sendModel)
@@ -575,6 +652,19 @@ public class LoginTo
                                     };
                                 }
                                 result.Raw = Post(Gitee.API_AccessToken, sendModel);
+                            }
+                            break;
+                        case LoginWhich.GitLab:
+                            {
+                                if (reqModel is not GitLabRefreshTokenModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new GitLabRefreshTokenModel()
+                                    {
+                                        Refresh_Token = beforeModel.Doc.GetValue("refresh_token")
+                                    };
+                                }
+                                result.Raw = Post(GitLab.API_AccessToken, sendModel);
                             }
                             break;
                         case LoginWhich.Microsoft:
@@ -753,6 +843,19 @@ public class LoginTo
                                 result.Raw = Get(Feishu.API_User, sendModel, new Dictionary<string, string> { { "Authorization", $"token {sendModel.Access_Token}" } });
                             }
                             break;
+                        case LoginWhich.AtomGit:
+                            {
+                                if (reqModel is not AtomGitUserModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new AtomGitUserModel()
+                                    {
+                                        Access_Token = beforeModel.Doc.GetValue("access_token")
+                                    };
+                                }
+                                result.Raw = Get(AtomGit.API_User, sendModel, new Dictionary<string, string> { { "Authorization", $"Bearer {sendModel.Access_Token}" } });
+                            }
+                            break;
                         case LoginWhich.Gitee:
                             {
                                 if (reqModel is not GiteeUserModel sendModel)
@@ -777,6 +880,19 @@ public class LoginTo
                                     };
                                 }
                                 result.Raw = Get(GitHub.API_User, sendModel, new Dictionary<string, string> { { "Authorization", $"token {sendModel.Access_Token}" } });
+                            }
+                            break;
+                        case LoginWhich.GitLab:
+                            {
+                                if (reqModel is not GitLabUserModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new GitLabUserModel()
+                                    {
+                                        Access_Token = beforeModel.Doc.GetValue("access_token")
+                                    };
+                                }
+                                result.Raw = Get(GitLab.API_User, sendModel);
                             }
                             break;
                         case LoginWhich.Microsoft:
@@ -835,6 +951,19 @@ public class LoginTo
                                 result.Raw = Get(Google.API_User, sendModel, new Dictionary<string, string> { { "Authorization", $"Bearer {sendModel.Access_Token}" } });
                             }
                             break;
+                        case LoginWhich.ORCID:
+                            {
+                                if (reqModel is not ORCIDUserModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new ORCIDUserModel()
+                                    {
+                                        Access_Token = beforeModel.Doc.GetValue("access_token")
+                                    };
+                                }
+                                result.Raw = Get(ORCID.API_User, sendModel, new Dictionary<string, string> { { "Authorization", $"Bearer {sendModel.Access_Token}" } });
+                            }
+                            break;
                     }
                 }
                 break;
@@ -875,7 +1004,7 @@ public class LoginTo
         if (loginType == LoginWhich.QQ)
         {
             openidResult = EntryOfStep<DocModel, object>(loginType, LoginStep.OpenId, beforeResult: tokenResult);
-            userResult = EntryOfStep<DocModel[], object>(loginType, LoginStep.User, beforeResult: new[] { tokenResult, openidResult });
+            userResult = EntryOfStep<DocModel[], object>(loginType, LoginStep.User, beforeResult: [tokenResult, openidResult]);
         }
         else if (loginType == LoginWhich.DingTalk && DingTalk.IsOld)
         {
@@ -901,7 +1030,6 @@ public class LoginTo
                     }
 
                     publicUser.Nickname = userResult.Doc.GetValue("nickname");
-                    publicUser.Gender = userResult.Doc.GetValue("gender") == "男" ? 1 : 2;
                     publicUser.Location = $"{userResult.Doc.GetValue("province")}{userResult.Doc.GetValue("city")}";
                 }
                 break;
@@ -912,7 +1040,6 @@ public class LoginTo
                     publicUser.OpenId = userResult.Doc.GetValue("openid");
                     publicUser.Avatar = userResult.Doc.GetValue("headimgurl");
                     publicUser.Nickname = userResult.Doc.GetValue("nickname");
-                    publicUser.Gender = userResult.Doc.GetValue<int?>("sex");
                     publicUser.Location = $"{userResult.Doc.GetValue("province")}{userResult.Doc.GetValue("city")}";
                 }
                 break;
@@ -940,8 +1067,7 @@ public class LoginTo
                         publicUser.Site = $"https://weibo.com/{userResult.Doc.GetValue("profile_url")}";
                     }
 
-                    publicUser.Intro = userResult.Doc.GetValue("description");
-                    publicUser.Gender = userResult.Doc.GetValue("gender") == "m" ? 1 : 2;
+                    publicUser.Bio = userResult.Doc.GetValue("description");
                     publicUser.Location = userResult.Doc.GetValue("location");
                 }
                 break;
@@ -957,7 +1083,6 @@ public class LoginTo
                     publicUser.UniqueId = userObj.GetValue("user_id");
                     publicUser.Avatar = userObj.GetValue("avatar");
                     publicUser.Nickname = userObj.GetValue("nick_name");
-                    publicUser.Gender = userObj.GetValue("gender").Equals("m", StringComparison.OrdinalIgnoreCase) ? 1 : 2;
                     publicUser.Location = $"{userObj.GetValue("province")}{userObj.GetValue("city")}";
                 }
                 break;
@@ -990,6 +1115,7 @@ public class LoginTo
                     publicUser.Email = userResult.Doc.GetValue("email");
                 }
                 break;
+            case LoginWhich.AtomGit:
             case LoginWhich.Gitee:
             case LoginWhich.GitHub:
                 {
@@ -999,7 +1125,19 @@ public class LoginTo
                     publicUser.Nickname = userResult.Doc.GetValue("name");
                     publicUser.Email = userResult.Doc.GetValue("email");
                     publicUser.Site = userResult.Doc.GetValue("blog");
-                    publicUser.Intro = userResult.Doc.GetValue("bio");
+                    publicUser.Bio = userResult.Doc.GetValue("bio");
+                }
+                break;
+            case LoginWhich.GitLab:
+                {
+                    publicUser.UniqueId = userResult.Doc.GetValue("id");
+                    publicUser.Avatar = userResult.Doc.GetValue("avatar_url");
+                    publicUser.Name = userResult.Doc.GetValue("username");
+                    publicUser.Nickname = userResult.Doc.GetValue("pronouns") ?? userResult.Doc.GetValue("name");
+                    publicUser.Email = userResult.Doc.GetValue("email");
+                    publicUser.Site = userResult.Doc.GetValue("website_url");
+                    publicUser.Bio = userResult.Doc.GetValue("bio");
+                    publicUser.Location = userResult.Doc.GetValue("location");
                 }
                 break;
             case LoginWhich.Microsoft:
@@ -1052,6 +1190,12 @@ public class LoginTo
                     publicUser.Nickname = userResult.Doc.GetValue("name");
                     publicUser.Email = userResult.Doc.GetValue("email");
                     publicUser.EmailVerified = userResult.Doc.GetValue<bool>("email_verified");
+                }
+                break;
+            case LoginWhich.ORCID:
+                {
+                    publicUser.UniqueId = userResult.Doc.GetValue("sub");
+                    publicUser.Nickname = userResult.Doc.GetValue("given_name");
                 }
                 break;
         }
@@ -1111,6 +1255,10 @@ public enum LoginWhich
     /// </summary>
     Feishu,
     /// <summary>
+    /// AtomGit
+    /// </summary>
+    AtomGit,
+    /// <summary>
     /// Gitee
     /// </summary>
     Gitee,
@@ -1118,6 +1266,10 @@ public enum LoginWhich
     /// GitHub
     /// </summary>
     GitHub,
+    /// <summary>
+    /// GitLab
+    /// </summary>
+    GitLab,
     /// <summary>
     /// 微软
     /// </summary>
@@ -1129,7 +1281,11 @@ public enum LoginWhich
     /// <summary>
     /// 谷歌
     /// </summary>
-    Google
+    Google,
+    /// <summary>
+    /// ORCID
+    /// </summary>
+    ORCID
 }
 
 /// <summary>
@@ -1272,11 +1428,6 @@ public class PublicUserResult
     public string Nickname { get; set; }
 
     /// <summary>
-    /// 性别：1男 2女
-    /// </summary>
-    public int? Gender { get; set; }
-
-    /// <summary>
     /// 头像
     /// </summary>
     public string Avatar { get; set; }
@@ -1299,7 +1450,7 @@ public class PublicUserResult
     /// <summary>
     /// 介绍
     /// </summary>
-    public string Intro { get; set; }
+    public string Bio { get; set; }
 
     /// <summary>
     /// 地点

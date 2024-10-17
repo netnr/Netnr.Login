@@ -44,80 +44,82 @@ namespace Netnr.Demo.Controllers.LoginDemo
             #region 初始化配置
             QQ.AppId = "";
             QQ.AppKey = "";
-            QQ.Redirect_Uri = "https://localhost/account/authcallback/qq";
-
-            DingTalk.AppId = "";
-            DingTalk.AppSecret = "";
-            DingTalk.Redirect_Uri = "";
-            //DingTalk.IsScanCode = false; //默认扫码登录，false 密码登录
-            //DingTalk.IsOld = true; //默认新模式
-            //旧模式授权流程为 Authorize（访问授权链接得到 code ）、User（根据 code 获取用户信息）
-            //艹（2022/08/06 辣鸡文档）
+            QQ.Redirect_Uri = "https://devd.io:6651/account/authcallback/qq";
 
             #endregion
 
             #region 自动读取 appsettings.json 
-            
-            /*
 
+            /*
+              //第三方登录
               "OAuthLogin": {
-                //是否启用
-                "enable": true,
-                "Redirect_Uri": "https://localhost/account/authcallback/{0}", //回调地址
+                "Redirect_Uri": "https://localhost/account/useroauthcallback/{0}", //回调地址
                 "QQ": {
-                  "AppId": "123",
-                  "AppKey": "456"
+                  "AppId": "",
+                  "AppKey": ""
                 },
                 "Weixin": {
-                  "AppId": "123",
-                  "AppSecret": "456"
+                  "AppId": "",
+                  "AppSecret": ""
                 },
                 "WeixinMP": {
-                  "AppId": "123",
-                  "AppSecret": "456"
+                  "AppId": "",
+                  "AppSecret": ""
                 },
                 "Weibo": {
-                  "AppKey": "123",
-                  "AppSecret": "456"
+                  "AppKey": "",
+                  "AppSecret": ""
                 },
                 "Taobao": {
-                  "AppKey": "123",
-                  "AppSecret": "456"
+                  "AppKey": "",
+                  "AppSecret": ""
                 },
                 "Alipay": {
-                  "AppId": "123",
-                  "AppPrivateKey": "456"
+                  "AppId": "",
+                  "AppPrivateKey": ""
                 },
                 "DingTalk": {
-                  "AppId": "123",
-                  "AppSecret": "456",
-                  "IsOld": true
+                  "AppId": "",
+                  "AppSecret": "",
+                  "IsOld": false
                 },
                 "Feishu": {
-                  "ClientId": "123",
-                  "ClientSecret": "456"
+                  "ClientId": "",
+                  "ClientSecret": ""
+                },
+                "AtomGit": {
+                  "ClientId": "",
+                  "ClientSecret": ""
                 },
                 "Gitee": {
-                  "ClientId": "123",
-                  "ClientSecret": "456"
+                  "ClientId": "",
+                  "ClientSecret": ""
                 },
                 "GitHub": {
-                  "ClientId": "123",
-                  "ClientSecret": "456"
+                  "ClientId": "",
+                  "ClientSecret": ""
+                },
+                "GitLab": {
+                  "ClientId": "",
+                  "ClientSecret": ""
                 },
                 "Microsoft": {
-                  "ClientId": "123",
-                  "ClientSecret": "456",
-                  "IsOld": true
+                  "ClientId": "",
+                  "ClientSecret": "",
+                  "IsOld": false
                 },
                 "StackOverflow": {
-                  "ClientId": "123",
-                  "ClientSecret": "456",
-                  "Key": "kkk"
+                  "ClientId": "",
+                  "ClientSecret": "",
+                  "Key": ""
                 },
                 "Google": {
-                  "ClientId": "123",
-                  "ClientSecret": "456"
+                  "ClientId": "",
+                  "ClientSecret": ""
+                },
+                "ORCID": {
+                  "ClientId": "",
+                  "ClientSecret": ""
                 }
               }
 
@@ -129,7 +131,11 @@ namespace Netnr.Demo.Controllers.LoginDemo
                 object val = null;
                 if (field == "Redirect_Uri")
                 {
-                    val = string.Format(AppTo.GetValue($"OAuthLogin:Redirect_Uri"), loginType.ToString().ToLower());
+                    val = AppTo.GetValue($"OAuthLogin:Redirect_Uri");
+                    if (val != null)
+                    {
+                        val = string.Format(val.ToString(), loginType.ToString().ToLower());
+                    }
                 }
                 else if (field.StartsWith("Is"))
                 {
@@ -166,7 +172,7 @@ namespace Netnr.Demo.Controllers.LoginDemo
                     return Redirect(authResult.Raw);
                 }
 
-                //自定义构建请求链接
+                //或 自定义构建请求链接
                 authResult = LoginTo.EntryOfStep<object, QQAuthorizeModel>(loginType, LoginStep.Authorize, reqModel: new()
                 {
                     State = $"bind_{DateTime.Now:yyyyMMddHHmmss}"
@@ -241,7 +247,7 @@ namespace Netnr.Demo.Controllers.LoginDemo
                 else
                 {
                     var loginType = id.Value;
-                    Console.WriteLine($"\r\n------- Sign in with {loginType} {DateTime.Now:yyyy-MM-dd HH:mm:ss}\r\n");
+                    Console.WriteLine($"{Environment.NewLine}----- Sign in with {loginType} {DateTime.Now:yyyy-MM-dd HH:mm:ss}{Environment.NewLine}");
 
                     //step: access token（非 旧版 DingTalk）
                     DocModel tokenResult = null;
@@ -253,7 +259,7 @@ namespace Netnr.Demo.Controllers.LoginDemo
                     if (!(loginType == LoginWhich.DingTalk && DingTalk.IsOld))
                     {
                         tokenResult = LoginTo.EntryOfStep<AuthorizeResult, object>(loginType, LoginStep.AccessToken, beforeResult: authResult);
-                        Console.WriteLine($"\r\n{nameof(LoginStep.AccessToken)}");
+                        Console.WriteLine($"{Environment.NewLine}{nameof(LoginStep.AccessToken)}");
                         Console.WriteLine(tokenResult.Doc.ToJson(true));
 
                         //step: refresh token （可选，仅支持部分）
@@ -261,14 +267,14 @@ namespace Netnr.Demo.Controllers.LoginDemo
                             && !(loginType == LoginWhich.Microsoft && Login.Microsoft.IsOld))
                         {
                             tokenResult = LoginTo.EntryOfStep<DocModel, object>(loginType, LoginStep.RefreshToken, beforeResult: tokenResult);
-                            Console.WriteLine($"\r\n{nameof(LoginStep.RefreshToken)}");
+                            Console.WriteLine($"{Environment.NewLine}{nameof(LoginStep.RefreshToken)}");
                             Console.WriteLine(tokenResult.Doc.ToJson(true));
                         }
                     }
                     if (loginType == LoginWhich.QQ)
                     {
                         openidResult = LoginTo.EntryOfStep<DocModel, object>(loginType, LoginStep.OpenId, beforeResult: tokenResult);
-                        userResult = LoginTo.EntryOfStep<DocModel[], object>(loginType, LoginStep.User, beforeResult: new[] { tokenResult, openidResult });
+                        userResult = LoginTo.EntryOfStep<DocModel[], object>(loginType, LoginStep.User, beforeResult: [tokenResult, openidResult]);
                     }
                     else if (loginType == LoginWhich.DingTalk && DingTalk.IsOld)
                     {
@@ -281,12 +287,12 @@ namespace Netnr.Demo.Controllers.LoginDemo
 
                     if (openidResult != null)
                     {
-                        Console.WriteLine($"\r\n{nameof(LoginStep.OpenId)}");
+                        Console.WriteLine($"{Environment.NewLine}{nameof(LoginStep.OpenId)}");
                         Console.WriteLine(openidResult.Doc.ToJson(true));
                     }
                     if (userResult != null)
                     {
-                        Console.WriteLine($"\r\n{nameof(LoginStep.User)}");
+                        Console.WriteLine($"{Environment.NewLine}{nameof(LoginStep.User)}");
                         Console.WriteLine(userResult.Doc.ToJson(true));
                     }
 
