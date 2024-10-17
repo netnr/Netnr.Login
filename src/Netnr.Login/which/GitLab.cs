@@ -1,6 +1,4 @@
-﻿#if Full || Login
-
-namespace Netnr.Login;
+﻿namespace Netnr.Login;
 
 /// <summary>
 /// GitLab
@@ -118,5 +116,3 @@ public class GitLabUserModel
     /// </summary>
     public string Access_Token { get; set; }
 }
-
-#endif

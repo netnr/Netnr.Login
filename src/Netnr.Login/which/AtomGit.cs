@@ -1,6 +1,4 @@
-﻿#if Full || Login
-
-namespace Netnr.Login;
+﻿namespace Netnr.Login;
 
 /// <summary>
 /// AtomGit
@@ -108,5 +106,3 @@ public class AtomGitUserModel
     /// </summary>
     public string Access_Token { get; set; }
 }
-
-#endif

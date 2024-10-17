@@ -1,6 +1,4 @@
-﻿#if Full || Login
-
-namespace Netnr.Login;
+﻿namespace Netnr.Login;
 
 /// <summary>
 /// ORCID
@@ -114,5 +112,3 @@ public class ORCIDUserModel
     /// </summary>
     public string Access_Token { get; set; }
 }
-
-#endif
