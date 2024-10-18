@@ -1,5 +1,5 @@
 # Netnr.Login
-第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、AtomGit、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、ORCID
+第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、华为（Huawei）、小米（Xiaomi）、AtomGit、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、ORCID
 
 ### 安装 (NuGet)
 ```
@@ -48,6 +48,16 @@ Install-Package Netnr.Login
         <td><img src="https://gs.zme.ink/static/login/feishu.svg" height="30" title="钉钉/DingTalk"></td>
         <td><a target="_blank" href="https://open.feishu.cn/document/common-capabilities/sso/web-application-sso/web-app-overview">参考文档</a></td>
         <td><a target="_blank" href="https://open.feishu.cn/app">应用申请</a></td>
+    </tr>
+    <tr>
+        <td><img src="https://gs.zme.ink/static/login/huawei.svg" height="30" title="华为/Huawei"></td>
+        <td><a target="_blank" href="https://developer.huawei.com/consumer/cn/doc/HMSCore-Guides/web-dev-guide-0000001050050895">参考文档</a></td>
+        <td><a target="_blank" href="https://developer.huawei.com/consumer/cn/console/service/AppService">应用申请</a></td>
+    </tr>
+    <tr>
+        <td><img src="https://gs.zme.ink/static/login/xiaomi.svg" height="30" title="小米/Xiaomi"></td>
+        <td><a target="_blank" href="https://dev.mi.com/console/doc/detail?pId=707">参考文档</a></td>
+        <td><a target="_blank" href="https://dev.mi.com/passport/oauth2/applist">应用申请</a></td>
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/atomgit.svg" height="30" title="AtomGit"></td>
@@ -102,6 +112,12 @@ v5 版本全面重写，不兼容以前，调用方法更简单简洁
 删除 字段 PublicUserResult.`Gender`  
 修改 字段 PublicUserResult.`Intro` 为 `Bio`  
 
+#### 2024-10-18
+新增 华为 小米  
+修复 微博获取唯一标识的错误，v5旧版本微博都有问题 `严重缺陷`  
+调整 PublicUserResult 类属性字段为 OpenId（有值，应用唯一）、UnionId（可能有值，跨应用唯一）  
+新增 PublicUserResult 类方法 `GetId() => UnionId ?? OpenId;`
+
 ### 使用
 v4 旧版本使用示例 `Netnr.Demo/Controllers/LoginController.cs`
 
@@ -111,7 +127,7 @@ v4 旧版本使用示例 `Netnr.Demo/Controllers/LoginController.cs`
 
 QQ.AppId = "";
 QQ.AppKey = "";
-QQ.Redirect_Uri = "https://devd.io:6651/account/authcallback/qq";
+QQ.Redirect_Uri = "https://localhost/account/authcallback/qq";
 ```
 
 ```csharp

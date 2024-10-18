@@ -87,6 +87,14 @@ namespace Netnr.Demo.Controllers.LoginDemo
                   "ClientId": "",
                   "ClientSecret": ""
                 },
+                "Huawei": {
+                  "AppId": "",
+                  "AppSecret": ""
+                },
+                "Xiaomi": {
+                  "AppId": "",
+                  "AppSecret": ""
+                },
                 "AtomGit": {
                   "ClientId": "",
                   "ClientSecret": ""
@@ -301,7 +309,7 @@ namespace Netnr.Demo.Controllers.LoginDemo
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
                 return BadRequest($"授权失败 {ex.Message}");
             }
         }

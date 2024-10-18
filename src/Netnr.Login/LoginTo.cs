@@ -65,7 +65,26 @@ public class LoginTo
     /// <param name="varCall"></param>
     public static void InitConfig(Func<LoginWhich, string, object> varCall)
     {
-        var arr = new[] { typeof(QQ), typeof(Weixin), typeof(WeixinMP), typeof(Weibo), typeof(Taobao), typeof(Alipay), typeof(DingTalk), typeof(AtomGit), typeof(Gitee), typeof(GitHub), typeof(GitLab), typeof(Microsoft), typeof(StackOverflow), typeof(Google), typeof(ORCID) };
+        var arr = new[] {
+            typeof(QQ),
+            typeof(Weixin),
+            typeof(WeixinMP),
+            typeof(Weibo),
+            typeof(Taobao),
+            typeof(Alipay),
+            typeof(DingTalk),
+            typeof(Feishu),
+            typeof(Huawei),
+            typeof(Xiaomi),
+            typeof(AtomGit),
+            typeof(Gitee),
+            typeof(GitHub),
+            typeof(GitLab),
+            typeof(Microsoft),
+            typeof(StackOverflow),
+            typeof(Google),
+            typeof(ORCID)
+        };
         foreach (var item in arr)
         {
             Enum.TryParse(item.Name, true, out LoginWhich loginType);
@@ -200,6 +219,26 @@ public class LoginTo
                                     authModel.State = stateCall.Invoke(authModel.State);
                                 }
                                 result.Raw = AuthorizeLink(Feishu.API_Authorize, authModel);
+                            }
+                            break;
+                        case LoginWhich.Huawei:
+                            {
+                                var authModel = reqModel == null ? new HuaweiAuthorizeModel() : reqModel as HuaweiAuthorizeModel;
+                                if (stateCall != null)
+                                {
+                                    authModel.State = stateCall.Invoke(authModel.State);
+                                }
+                                result.Raw = AuthorizeLink(Huawei.API_Authorize, authModel);
+                            }
+                            break;
+                        case LoginWhich.Xiaomi:
+                            {
+                                var authModel = reqModel == null ? new XiaomiAuthorizeModel() : reqModel as XiaomiAuthorizeModel;
+                                if (stateCall != null)
+                                {
+                                    authModel.State = stateCall.Invoke(authModel.State);
+                                }
+                                result.Raw = AuthorizeLink(Xiaomi.API_Authorize, authModel);
                             }
                             break;
                         case LoginWhich.AtomGit:
@@ -410,6 +449,30 @@ public class LoginTo
                                     };
                                 }
                                 result.Raw = Post(Feishu.API_AccessToken, sendModel);
+                            }
+                            break;
+                        case LoginWhich.Huawei:
+                            {
+                                if (reqModel is not HuaweiAccessTokenModel sendModel)
+                                {
+                                    sendModel = new HuaweiAccessTokenModel()
+                                    {
+                                        Code = authModel.Code
+                                    };
+                                }
+                                result.Raw = Post(Huawei.API_AccessToken, sendModel);
+                            }
+                            break;
+                        case LoginWhich.Xiaomi:
+                            {
+                                if (reqModel is not XiaomiAccessTokenModel sendModel)
+                                {
+                                    sendModel = new XiaomiAccessTokenModel()
+                                    {
+                                        Code = authModel.Code
+                                    };
+                                }
+                                result.Raw = Post(Xiaomi.API_AccessToken, sendModel);
                             }
                             break;
                         case LoginWhich.AtomGit:
@@ -628,6 +691,32 @@ public class LoginTo
                                 result.Raw = Post(Feishu.API_AccessToken, sendModel);
                             }
                             break;
+                        case LoginWhich.Huawei:
+                            {
+                                if (reqModel is not HuaweiRefreshTokenModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new HuaweiRefreshTokenModel()
+                                    {
+                                        Refresh_Token = beforeModel.Doc.GetValue("refresh_token")
+                                    };
+                                }
+                                result.Raw = Post(Huawei.API_AccessToken, sendModel);
+                            }
+                            break;
+                        case LoginWhich.Xiaomi:
+                            {
+                                if (reqModel is not XiaomiRefreshTokenModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new XiaomiRefreshTokenModel()
+                                    {
+                                        Refresh_Token = beforeModel.Doc.GetValue("refresh_token")
+                                    };
+                                }
+                                result.Raw = Post(Xiaomi.API_AccessToken, sendModel);
+                            }
+                            break;
                         case LoginWhich.AtomGit:
                             {
                                 if (reqModel is not AtomGitRefreshTokenModel sendModel)
@@ -843,6 +932,32 @@ public class LoginTo
                                 result.Raw = Get(Feishu.API_User, sendModel, new Dictionary<string, string> { { "Authorization", $"token {sendModel.Access_Token}" } });
                             }
                             break;
+                        case LoginWhich.Huawei:
+                            {
+                                if (reqModel is not HuaweiUserModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new HuaweiUserModel()
+                                    {
+                                        Access_Token = beforeModel.Doc.GetValue("access_token")
+                                    };
+                                }
+                                result.Raw = Post(Huawei.API_User, sendModel);
+                            }
+                            break;
+                        case LoginWhich.Xiaomi:
+                            {
+                                if (reqModel is not XiaomiUserModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new XiaomiUserModel()
+                                    {
+                                        Token = beforeModel.Doc.GetValue("access_token")
+                                    };
+                                }
+                                result.Raw = Get(Xiaomi.API_User, sendModel);
+                            }
+                            break;
                         case LoginWhich.AtomGit:
                             {
                                 if (reqModel is not AtomGitUserModel sendModel)
@@ -1021,7 +1136,7 @@ public class LoginTo
         {
             case LoginWhich.QQ:
                 {
-                    publicUser.UniqueId = openidResult.Doc.GetValue("openid");
+                    publicUser.OpenId = openidResult.Doc.GetValue("openid");
 
                     publicUser.Avatar = userResult.Doc.GetValue("figureurl_qq");
                     if (string.IsNullOrWhiteSpace(publicUser.Avatar))
@@ -1036,7 +1151,7 @@ public class LoginTo
             case LoginWhich.Weixin:
             case LoginWhich.WeixinMP:
                 {
-                    publicUser.UniqueId = userResult.Doc.GetValue("unionid");
+                    publicUser.UnionId = userResult.Doc.GetValue("unionid");
                     publicUser.OpenId = userResult.Doc.GetValue("openid");
                     publicUser.Avatar = userResult.Doc.GetValue("headimgurl");
                     publicUser.Nickname = userResult.Doc.GetValue("nickname");
@@ -1045,9 +1160,7 @@ public class LoginTo
                 break;
             case LoginWhich.Weibo:
                 {
-                    publicUser.UniqueId = tokenResult.Doc.GetValue("access_token");
-                    publicUser.OpenId = tokenResult.Doc.GetValue("idstr");
-
+                    publicUser.OpenId = userResult.Doc.GetValue("idstr");
                     publicUser.Avatar = userResult.Doc.GetValue("avatar_hd");
                     if (string.IsNullOrWhiteSpace(publicUser.Avatar))
                     {
@@ -1073,14 +1186,14 @@ public class LoginTo
                 break;
             case LoginWhich.Taobao:
                 {
-                    publicUser.UniqueId = tokenResult.Doc.GetValue("open_uid");
+                    publicUser.OpenId = tokenResult.Doc.GetValue("open_uid");
                 }
                 break;
             case LoginWhich.Alipay:
                 {
                     var userObj = userResult.Doc.GetProperty("alipay_user_info_share_response");
 
-                    publicUser.UniqueId = userObj.GetValue("user_id");
+                    publicUser.OpenId = userObj.GetValue("user_id");
                     publicUser.Avatar = userObj.GetValue("avatar");
                     publicUser.Nickname = userObj.GetValue("nick_name");
                     publicUser.Location = $"{userObj.GetValue("province")}{userObj.GetValue("city")}";
@@ -1092,13 +1205,13 @@ public class LoginTo
                     {
                         var userObj = userResult.Doc.GetProperty("user_info");
 
-                        publicUser.UniqueId = userObj.GetValue("unionid");
+                        publicUser.UnionId = userObj.GetValue("unionid");
                         publicUser.OpenId = userObj.GetValue("openid");
                         publicUser.Nickname = userObj.GetValue("nick");
                     }
                     else
                     {
-                        publicUser.UniqueId = userResult.Doc.GetValue("unionId");
+                        publicUser.UnionId = userResult.Doc.GetValue("unionId");
                         publicUser.OpenId = userResult.Doc.GetValue("openId");
                         publicUser.Avatar = userResult.Doc.GetValue("avatarUrl");
                         publicUser.Nickname = userResult.Doc.GetValue("nick");
@@ -1108,18 +1221,40 @@ public class LoginTo
                 break;
             case LoginWhich.Feishu:
                 {
-                    publicUser.UniqueId = userResult.Doc.GetValue("union_id");
+                    publicUser.UnionId = userResult.Doc.GetValue("union_id");
                     publicUser.OpenId = userResult.Doc.GetValue("open_id");
                     publicUser.Avatar = userResult.Doc.GetValue("avatar_big");
                     publicUser.Name = userResult.Doc.GetValue("name");
                     publicUser.Email = userResult.Doc.GetValue("email");
                 }
                 break;
+            case LoginWhich.Huawei:
+                {
+                    publicUser.UnionId = userResult.Doc.GetValue("unionID");
+                    publicUser.OpenId = userResult.Doc.GetValue("openID");
+                    publicUser.Nickname = userResult.Doc.GetValue("displayName");
+                    publicUser.Avatar = userResult.Doc.GetValue("headPictureURL");
+                    publicUser.Email = userResult.Doc.GetValue("email");
+                }
+                break;
+            case LoginWhich.Xiaomi:
+                {
+                    publicUser.UnionId = tokenResult.Doc.GetValue("union_id");
+                    publicUser.OpenId = tokenResult.Doc.GetValue("openId");
+
+                    var userObj = userResult.Doc.GetProperty("data");
+                    if (userObj.ValueKind != JsonValueKind.Null)
+                    {
+                        publicUser.Avatar = userObj.GetValue("miliaoIcon");
+                        publicUser.Nickname = userObj.GetValue("miliaoNick");
+                    }
+                }
+                break;
             case LoginWhich.AtomGit:
             case LoginWhich.Gitee:
             case LoginWhich.GitHub:
                 {
-                    publicUser.UniqueId = userResult.Doc.GetValue("id");
+                    publicUser.OpenId = userResult.Doc.GetValue("id");
                     publicUser.Avatar = userResult.Doc.GetValue("avatar_url");
                     publicUser.Name = userResult.Doc.GetValue("login");
                     publicUser.Nickname = userResult.Doc.GetValue("name");
@@ -1130,7 +1265,7 @@ public class LoginTo
                 break;
             case LoginWhich.GitLab:
                 {
-                    publicUser.UniqueId = userResult.Doc.GetValue("id");
+                    publicUser.OpenId = userResult.Doc.GetValue("id");
                     publicUser.Avatar = userResult.Doc.GetValue("avatar_url");
                     publicUser.Name = userResult.Doc.GetValue("username");
                     publicUser.Nickname = userResult.Doc.GetValue("pronouns") ?? userResult.Doc.GetValue("name");
@@ -1144,7 +1279,7 @@ public class LoginTo
                 {
                     if (Microsoft.IsOld)
                     {
-                        publicUser.UniqueId = userResult.Doc.GetValue("id");
+                        publicUser.OpenId = userResult.Doc.GetValue("id");
                         publicUser.Nickname = userResult.Doc.GetValue("name");
 
                         var emailObj = userResult.Doc.GetProperty("emails");
@@ -1157,7 +1292,7 @@ public class LoginTo
                     else
                     {
                         //与v4 版本获取的 ID 不一样
-                        publicUser.UniqueId = userResult.Doc.GetValue("sub");
+                        publicUser.OpenId = userResult.Doc.GetValue("sub");
                         //https://graph.microsoft.com/v1.0/me/photo/$value
                         publicUser.Avatar = userResult.Doc.GetValue("picture"); //请求下载异常
                         publicUser.Nickname = userResult.Doc.GetValue("name");
@@ -1169,7 +1304,7 @@ public class LoginTo
                 {
                     var userObj = userResult.Doc.GetProperty("items").EnumerateArray().First();
 
-                    publicUser.UniqueId = userObj.GetValue("account_id");
+                    publicUser.OpenId = userObj.GetValue("account_id");
                     publicUser.OpenId = userObj.GetValue("user_id");
                     publicUser.Avatar = userObj.GetValue("profile_image");
                     publicUser.Nickname = userObj.GetValue("display_name");
@@ -1185,24 +1320,18 @@ public class LoginTo
                 break;
             case LoginWhich.Google:
                 {
-                    publicUser.UniqueId = userResult.Doc.GetValue("sub");
+                    publicUser.OpenId = userResult.Doc.GetValue("sub");
                     publicUser.Avatar = userResult.Doc.GetValue("picture");
                     publicUser.Nickname = userResult.Doc.GetValue("name");
                     publicUser.Email = userResult.Doc.GetValue("email");
-                    publicUser.EmailVerified = userResult.Doc.GetValue<bool>("email_verified");
                 }
                 break;
             case LoginWhich.ORCID:
                 {
-                    publicUser.UniqueId = userResult.Doc.GetValue("sub");
+                    publicUser.OpenId = userResult.Doc.GetValue("sub");
                     publicUser.Nickname = userResult.Doc.GetValue("given_name");
                 }
                 break;
-        }
-
-        if (string.IsNullOrWhiteSpace(publicUser.OpenId))
-        {
-            publicUser.OpenId = publicUser.UniqueId;
         }
 
         return new(tokenResult, openidResult, userResult, publicUser);
@@ -1254,6 +1383,14 @@ public enum LoginWhich
     /// 飞书
     /// </summary>
     Feishu,
+    /// <summary>
+    /// 华为
+    /// </summary>
+    Huawei,
+    /// <summary>
+    /// 小米
+    /// </summary>
+    Xiaomi,
     /// <summary>
     /// AtomGit
     /// </summary>
@@ -1408,14 +1545,13 @@ public class PublicAccessTokenModel
 public class PublicUserResult
 {
     /// <summary>
-    /// 全局唯一
-    /// </summary>
-    public string UniqueId { get; set; }
-
-    /// <summary>
-    /// 应用唯一
+    /// 应用唯一，始终有值
     /// </summary>
     public string OpenId { get; set; }
+    /// <summary>
+    /// 跨应用唯一，可能有值
+    /// </summary>
+    public string UnionId { get; set; }
 
     /// <summary>
     /// 名称
@@ -1438,11 +1574,6 @@ public class PublicUserResult
     public string Email { get; set; }
 
     /// <summary>
-    /// 邮箱验证（Google）
-    /// </summary>
-    public bool EmailVerified { get; set; } = false;
-
-    /// <summary>
     /// 站点
     /// </summary>
     public string Site { get; set; }
@@ -1456,4 +1587,10 @@ public class PublicUserResult
     /// 地点
     /// </summary>
     public string Location { get; set; }
+
+    /// <summary>
+    /// 获取标识 优先取 UnionId 再取 OpenId
+    /// </summary>
+    /// <returns></returns>
+    public string GetId() => UnionId ?? OpenId;
 }
