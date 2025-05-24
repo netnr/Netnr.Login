@@ -125,6 +125,10 @@ namespace Netnr.Demo.Controllers.LoginDemo
                   "ClientId": "",
                   "ClientSecret": ""
                 },
+                "Facebook": {
+                  "ClientId": "",
+                  "ClientSecret": ""
+                },
                 "ORCID": {
                   "ClientId": "",
                   "ClientSecret": ""
@@ -271,7 +275,7 @@ namespace Netnr.Demo.Controllers.LoginDemo
                         Console.WriteLine(tokenResult.Doc.ToJson(true));
 
                         //step: refresh token （可选，仅支持部分）
-                        if (!new[] { LoginWhich.Weibo, LoginWhich.Taobao, LoginWhich.GitHub, LoginWhich.StackOverflow }.Contains(loginType)
+                        if (!new[] { LoginWhich.Weibo, LoginWhich.Taobao, LoginWhich.GitHub, LoginWhich.Facebook, LoginWhich.StackOverflow }.Contains(loginType)
                             && !(loginType == LoginWhich.Microsoft && Login.Microsoft.IsOld))
                         {
                             tokenResult = LoginTo.EntryOfStep<DocModel, object>(loginType, LoginStep.RefreshToken, beforeResult: tokenResult);

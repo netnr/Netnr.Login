@@ -338,24 +338,24 @@ internal partial class HttpTo
             var result = sr.ReadToEnd();
             return result;
         }
-        catch (WebException e)
+        catch (WebException ex)
         {
-            var httpResponse = (HttpWebResponse)e.Response;
-            var errCode = (int)httpResponse.StatusCode;
-            var result = string.Empty;
-            if (e.Response == null)
+            if (ex.Response != null)
             {
-                result = e.Response.ToString();
-            }
-            else
-            {
-                using Stream stream = e.Response.GetResponseStream();
+                using Stream stream = ex.Response.GetResponseStream();
                 using var reader = new StreamReader(stream);
-                result = reader.ReadToEnd();
-            }
-            Console.WriteLine($"Error Code: {errCode}");
-            Console.WriteLine(result);
+                var result = reader.ReadToEnd();
 
+                if (ex.Response is HttpWebResponse httpResponse)
+                {
+                    var statusCode = (int)httpResponse.StatusCode;
+
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"StatusCode: {statusCode}{Environment.NewLine}{result}");
+                    Console.ResetColor();
+                }
+                Console.WriteLine(result);
+            }
             throw;
         }
     }

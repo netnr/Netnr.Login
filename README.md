@@ -1,10 +1,11 @@
 # Netnr.Login
-第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、华为（Huawei）、小米（Xiaomi）、AtomGit、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、ORCID
+第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、华为（Huawei）、小米（Xiaomi）、AtomGit、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、Facebook、ORCID
 
 ### 安装 (NuGet)
 ```
 Install-Package Netnr.Login
 ```
+[NuGet | Netnr.Login](https://www.nuget.org/packages/Netnr.Login)
 
 ### 支持第三方登录
 <table>
@@ -41,12 +42,12 @@ Install-Package Netnr.Login
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/dingtalk.svg" height="30" title="钉钉/DingTalk"></td>
-        <td><a target="_blank" href="https://open.dingtalk.com/document/tutorial/scan-qr-code-to-log-on-to-third-party-websites">参考文档</a></td>
-        <td><a target="_blank" href="https://open-dev.dingtalk.com/#/loginMan">应用申请</a></td>
+        <td><a target="_blank" href="https://open.dingtalk.com/document/isvapp/obtain-identity-credentials">参考文档</a></td>
+        <td><a target="_blank" href="https://open-dev.dingtalk.com/fe/app">应用申请</a></td>
     </tr>
     <tr>
-        <td><img src="https://gs.zme.ink/static/login/feishu.svg" height="30" title="钉钉/DingTalk"></td>
-        <td><a target="_blank" href="https://open.feishu.cn/document/common-capabilities/sso/web-application-sso/web-app-overview">参考文档</a></td>
+        <td><img src="https://gs.zme.ink/static/login/feishu.svg" height="30" title="飞书/Feishu"></td>
+        <td><a target="_blank" href="https://open.feishu.cn/document/sso/web-application-sso/login-overview">参考文档</a></td>
         <td><a target="_blank" href="https://open.feishu.cn/app">应用申请</a></td>
     </tr>
     <tr>
@@ -71,17 +72,17 @@ Install-Package Netnr.Login
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/github.svg" height="30" title="GitHub"></td>
-        <td><a target="_blank" href="https://docs.github.com/en/developers/apps/building-oauth-apps/authorizing-oauth-apps">参考文档</a></td>
+        <td><a target="_blank" href="https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps">参考文档</a></td>
         <td><a target="_blank" href="https://github.com/settings/developers">应用申请</a></td>
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/gitlab.svg" height="30" title="GitLab"></td>
-        <td><a target="_blank" href="https://docs.gitlab.com/ee/api/oauth2.html">参考文档</a></td>
+        <td><a target="_blank" href="https://docs.gitlab.com/api/oauth2/">参考文档</a></td>
         <td><a target="_blank" href="https://gitlab.com/oauth/applications">应用申请</a></td>
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/microsoft.svg" height="30" title="微软/Microsoft"></td>
-        <td><a target="_blank" href="https://docs.microsoft.com/zh-cn/azure/active-directory/develop/v2-oauth2-auth-code-flow">参考文档</a></td>
+        <td><a target="_blank" href="https://learn.microsoft.com/zh-cn/entra/identity-platform/v2-oauth2-auth-code-flow">参考文档</a></td>
         <td><a target="_blank" href="https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/RegisteredApps">应用申请</a></td>
     </tr>
     <tr>
@@ -93,6 +94,11 @@ Install-Package Netnr.Login
         <td><img src="https://gs.zme.ink/static/login/google.svg" height="30" title="谷歌/Google"></td>
         <td><a target="_blank" href="https://developers.google.com/identity/protocols/oauth2/web-server">参考文档</a></td>
         <td><a target="_blank" href="https://console.developers.google.com/apis/credentials">应用申请</a></td>
+    </tr>
+    <tr>
+        <td><img src="https://gs.zme.ink/static/login/facebook.svg" height="30" title="Facebook"></td>
+        <td><a target="_blank" href="https://developers.facebook.com/docs/facebook-login/guides/advanced/manual-flow/">参考文档</a></td>
+        <td><a target="_blank" href="https://developers.facebook.com/apps/">应用申请</a></td>
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/orcid.svg" height="30" title="ORCID"></td>
@@ -107,16 +113,20 @@ v5 版本全面重写，不兼容以前，调用方法更简单简洁
 微软含新旧模式（注意新旧版本标识不相同）  
 钉钉含新旧模式（新：企业内部开发 H5微应用；旧：移动应用接入 扫码登录）  
 
-#### 2024-10-17
-新增 AtomGit、ORCID、GitLab  
-删除 字段 PublicUserResult.`Gender`  
-修改 字段 PublicUserResult.`Intro` 为 `Bio`  
+#### next
+新增 Facebook  
+更新 支付宝签名 RSACryptoServiceProvider 改为 RSA ，消除 CA1416 提醒
 
 #### 2024-10-18
 新增 华为 小米  
 修复 微博获取唯一标识的错误，v5旧版本微博都有问题 `严重缺陷`  
 调整 PublicUserResult 类属性字段为 OpenId（有值，应用唯一）、UnionId（可能有值，跨应用唯一）  
 新增 PublicUserResult 类方法 `GetId() => UnionId ?? OpenId;`
+
+#### 2024-10-17
+新增 AtomGit、ORCID、GitLab  
+删除 字段 PublicUserResult.`Gender`  
+修改 字段 PublicUserResult.`Intro` 为 `Bio`  
 
 ### 使用
 v4 旧版本使用示例 `Netnr.Demo/Controllers/LoginController.cs`

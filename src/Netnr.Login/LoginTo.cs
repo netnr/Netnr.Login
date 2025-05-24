@@ -83,6 +83,7 @@ public class LoginTo
             typeof(Microsoft),
             typeof(StackOverflow),
             typeof(Google),
+            typeof(Facebook),
             typeof(ORCID)
         };
         foreach (var item in arr)
@@ -321,6 +322,16 @@ public class LoginTo
                                     authModel.State = stateCall.Invoke(authModel.State);
                                 }
                                 result.Raw = AuthorizeLink(Google.API_Authorize, authModel);
+                            }
+                            break;
+                        case LoginWhich.Facebook:
+                            {
+                                var authModel = reqModel == null ? new FacebookAuthorizeModel() : reqModel as FacebookAuthorizeModel;
+                                if (stateCall != null)
+                                {
+                                    authModel.State = stateCall.Invoke(authModel.State);
+                                }
+                                result.Raw = AuthorizeLink(Facebook.API_Authorize, authModel);
                             }
                             break;
                         case LoginWhich.ORCID:
@@ -573,6 +584,18 @@ public class LoginTo
                                 result.Raw = Post(Google.API_AccessToken, sendModel);
                             }
                             break;
+                        case LoginWhich.Facebook:
+                            {
+                                if (reqModel is not FacebookAccessTokenModel sendModel)
+                                {
+                                    sendModel = new FacebookAccessTokenModel()
+                                    {
+                                        Code = authModel.Code
+                                    };
+                                }
+                                result.Raw = Post(Facebook.API_AccessToken, sendModel);
+                            }
+                            break;
                         case LoginWhich.ORCID:
                             {
                                 if (reqModel is not ORCIDAccessTokenModel sendModel)
@@ -791,6 +814,7 @@ public class LoginTo
                             break;
                         case LoginWhich.Weibo:
                         case LoginWhich.GitHub:
+                        case LoginWhich.Facebook:
                         case LoginWhich.StackOverflow:
                             throw new Exception("not support");
                     }
@@ -1066,6 +1090,19 @@ public class LoginTo
                                 result.Raw = Get(Google.API_User, sendModel, new Dictionary<string, string> { { "Authorization", $"Bearer {sendModel.Access_Token}" } });
                             }
                             break;
+                        case LoginWhich.Facebook:
+                            {
+                                if (reqModel is not FacebookUserModel sendModel)
+                                {
+                                    var beforeModel = beforeResult as DocModel;
+                                    sendModel = new FacebookUserModel()
+                                    {
+                                        Access_Token = beforeModel.Doc.GetValue("access_token")
+                                    };
+                                }
+                                result.Raw = Get(Facebook.API_User, sendModel);
+                            }
+                            break;
                         case LoginWhich.ORCID:
                             {
                                 if (reqModel is not ORCIDUserModel sendModel)
@@ -1326,6 +1363,21 @@ public class LoginTo
                     publicUser.Email = userResult.Doc.GetValue("email");
                 }
                 break;
+            case LoginWhich.Facebook:
+                {
+                    publicUser.OpenId = userResult.Doc.GetValue("id");
+                    publicUser.Nickname = userResult.Doc.GetValue("name");
+                    publicUser.Email = userResult.Doc.GetValue("email");
+
+                    if (userResult.Doc.TryGetProperty("picture", out JsonElement fb_picture))
+                    {
+                        if (fb_picture.TryGetProperty("data", out JsonElement fb_picture_data))
+                        {
+                            publicUser.Avatar = fb_picture_data.GetValue("url");
+                        }
+                    }
+                }
+                break;
             case LoginWhich.ORCID:
                 {
                     publicUser.OpenId = userResult.Doc.GetValue("sub");
@@ -1419,6 +1471,10 @@ public enum LoginWhich
     /// 谷歌
     /// </summary>
     Google,
+    /// <summary>
+    /// Meta
+    /// </summary>
+    Facebook,
     /// <summary>
     /// ORCID
     /// </summary>

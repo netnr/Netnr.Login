@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net462;netstandard2;netstandard2.1;net6;net7;net8</TargetFrameworks>
+		<TargetFrameworks>net462;netstandard2;netstandard2.1;net6;net7;net8;net9</TargetFrameworks>
 		<LangVersion>latest</LangVersion>
-		<Version>5.2.0</Version>
+		<Version>5.4.0</Version>
 		<Authors>netnr</Authors>
 		<Copyright>netnr</Copyright>
 		<Company>$(Authors)</Company>
 		<PackageIcon>favicon.png</PackageIcon>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Description>第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、AtomGit、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、ORCID</Description>
+		<Description>第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、华为（Huawei）、小米（Xiaomi）、AtomGit、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、Facebook、ORCID</Description>
 		<PackageProjectUrl>https://github.com/netnr</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/netnr</RepositoryUrl>
 		<PackageTags>oauth2.0;login</PackageTags>
-		<PackageReleaseNotes>新增 AtomGit、ORCID、GitLab</PackageReleaseNotes>
+		<PackageReleaseNotes>Add Facebook</PackageReleaseNotes>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReadmeFile>Netnr.Login.md</PackageReadmeFile>
 	</PropertyGroup>
