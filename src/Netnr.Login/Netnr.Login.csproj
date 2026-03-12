@@ -1,36 +1,37 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<TargetFrameworks>net462;netstandard2;netstandard2.1;net6;net7;net8;net9</TargetFrameworks>
-		<LangVersion>latest</LangVersion>
-		<Version>5.4.0</Version>
-		<Authors>netnr</Authors>
-		<Copyright>netnr</Copyright>
-		<Company>$(Authors)</Company>
-		<PackageIcon>favicon.png</PackageIcon>
-		<GenerateDocumentationFile>True</GenerateDocumentationFile>
-		<Description>第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、华为（Huawei）、小米（Xiaomi）、AtomGit、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、Facebook、ORCID</Description>
-		<PackageProjectUrl>https://github.com/netnr</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/netnr</RepositoryUrl>
-		<PackageTags>oauth2.0;login</PackageTags>
-		<PackageReleaseNotes>Add Facebook</PackageReleaseNotes>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageReadmeFile>Netnr.Login.md</PackageReadmeFile>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<NoWarn>1701;1702;1591</NoWarn>
-		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
-	</PropertyGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
-		<PackageReference Include="System.Text.Json" Version="8.0.5" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2'">
-		<PackageReference Include="System.Text.Json" Version="8.0.5" />
-	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
-		<PackageReference Include="System.Text.Json" Version="8.0.5" />
-	</ItemGroup>
-
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net462;netstandard2;netstandard2.1;net6.0;net7.0;net8.0;net9.0;net10.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Version>5.5.0</Version>
+    <Authors>netnr</Authors>
+    <Copyright>netnr</Copyright>
+    <Company>$(Authors)</Company>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Description>第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）服务号、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、华为（Huawei）、小米（Xiaomi）、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、Facebook、ORCID</Description>
+    <PackageProjectUrl>https://github.com/netnr</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/netnr</RepositoryUrl>
+    <PackageTags>oauth2.0;login</PackageTags>
+    <PackageReleaseNotes>Add Facebook</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+    <PackageReference Include="System.Text.Json" Version="10.0.4" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2'">
+    <PackageReference Include="System.Text.Json" Version="10.0.4" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1'">
+    <PackageReference Include="System.Text.Json" Version="10.0.4" />
+  </ItemGroup>
 </Project>

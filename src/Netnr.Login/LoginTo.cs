@@ -1,4 +1,4 @@
-﻿namespace Netnr.Login;
+namespace Netnr.Login;
 
 /// <summary>
 /// 登录
@@ -76,7 +76,6 @@ public class LoginTo
             typeof(Feishu),
             typeof(Huawei),
             typeof(Xiaomi),
-            typeof(AtomGit),
             typeof(Gitee),
             typeof(GitHub),
             typeof(GitLab),
@@ -240,16 +239,6 @@ public class LoginTo
                                     authModel.State = stateCall.Invoke(authModel.State);
                                 }
                                 result.Raw = AuthorizeLink(Xiaomi.API_Authorize, authModel);
-                            }
-                            break;
-                        case LoginWhich.AtomGit:
-                            {
-                                var authModel = reqModel == null ? new AtomGitAuthorizeModel() : reqModel as AtomGitAuthorizeModel;
-                                if (stateCall != null)
-                                {
-                                    authModel.State = stateCall.Invoke(authModel.State);
-                                }
-                                result.Raw = AuthorizeLink(AtomGit.API_Authorize, authModel);
                             }
                             break;
                         case LoginWhich.Gitee:
@@ -484,18 +473,6 @@ public class LoginTo
                                     };
                                 }
                                 result.Raw = Post(Xiaomi.API_AccessToken, sendModel);
-                            }
-                            break;
-                        case LoginWhich.AtomGit:
-                            {
-                                if (reqModel is not AtomGitAccessTokenModel sendModel)
-                                {
-                                    sendModel = new AtomGitAccessTokenModel()
-                                    {
-                                        Code = authModel.Code
-                                    };
-                                }
-                                result.Raw = Post(AtomGit.API_AccessToken, sendModel);
                             }
                             break;
                         case LoginWhich.Gitee:
@@ -740,19 +717,6 @@ public class LoginTo
                                 result.Raw = Post(Xiaomi.API_AccessToken, sendModel);
                             }
                             break;
-                        case LoginWhich.AtomGit:
-                            {
-                                if (reqModel is not AtomGitRefreshTokenModel sendModel)
-                                {
-                                    var beforeModel = beforeResult as DocModel;
-                                    sendModel = new AtomGitRefreshTokenModel()
-                                    {
-                                        Refresh_Token = beforeModel.Doc.GetValue("refresh_token")
-                                    };
-                                }
-                                result.Raw = Post(AtomGit.API_AccessToken, sendModel);
-                            }
-                            break;
                         case LoginWhich.Gitee:
                             {
                                 if (reqModel is not GiteeRefreshTokenModel sendModel)
@@ -980,19 +944,6 @@ public class LoginTo
                                     };
                                 }
                                 result.Raw = Get(Xiaomi.API_User, sendModel);
-                            }
-                            break;
-                        case LoginWhich.AtomGit:
-                            {
-                                if (reqModel is not AtomGitUserModel sendModel)
-                                {
-                                    var beforeModel = beforeResult as DocModel;
-                                    sendModel = new AtomGitUserModel()
-                                    {
-                                        Access_Token = beforeModel.Doc.GetValue("access_token")
-                                    };
-                                }
-                                result.Raw = Get(AtomGit.API_User, sendModel, new Dictionary<string, string> { { "Authorization", $"Bearer {sendModel.Access_Token}" } });
                             }
                             break;
                         case LoginWhich.Gitee:
@@ -1287,7 +1238,6 @@ public class LoginTo
                     }
                 }
                 break;
-            case LoginWhich.AtomGit:
             case LoginWhich.Gitee:
             case LoginWhich.GitHub:
                 {
@@ -1443,10 +1393,6 @@ public enum LoginWhich
     /// 小米
     /// </summary>
     Xiaomi,
-    /// <summary>
-    /// AtomGit
-    /// </summary>
-    AtomGit,
     /// <summary>
     /// Gitee
     /// </summary>

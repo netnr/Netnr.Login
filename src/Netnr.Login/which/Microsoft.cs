@@ -1,4 +1,4 @@
-﻿namespace Netnr.Login;
+namespace Netnr.Login;
 
 /// <summary>
 /// Microsoft

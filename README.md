@@ -1,5 +1,5 @@
 # Netnr.Login
-第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、华为（Huawei）、小米（Xiaomi）、AtomGit、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、Facebook、ORCID
+第三方 OAuth2 授权登录，QQ、微信开放平台（Weixin）、微信公众平台（WeixinMP）服务号、微博（Weibo）、淘宝（Taobao）、支付宝（Alipay）、钉钉（DingTalk）、飞书（Feishu）、华为（Huawei）、小米（Xiaomi）、码云（Gitee）、GitHub、GitLab、微软（Microsoft ）、StackOverflow、谷歌（Google）、Facebook、ORCID
 
 ### 安装 (NuGet)
 ```
@@ -21,8 +21,8 @@ Install-Package Netnr.Login
         <td><a target="_blank" href="https://open.weixin.qq.com">应用申请</a></td>
     </tr>
     <tr>
-        <td><img src="https://gs.zme.ink/static/login/weixinmp.svg" height="30" title="微信公众平台/WeixinMP"></td>
-        <td><a target="_blank" href="https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/Wechat_webpage_authorization.html">参考文档</a></td>
+        <td><img src="https://gs.zme.ink/static/login/weixinmp.svg" height="30" title="微信公众平台/WeixinMP/服务号"></td>
+        <td><a target="_blank" href="https://developers.weixin.qq.com/doc/service/guide/h5/auth.html">参考文档</a></td>
         <td><a target="_blank" href="https://mp.weixin.qq.com">应用申请</a></td>
     </tr>
     <tr>
@@ -33,7 +33,7 @@ Install-Package Netnr.Login
     <tr>
         <td><img src="https://gs.zme.ink/static/login/taobao.svg" height="30" title="淘宝"></td>
         <td><a target="_blank" href="https://open.taobao.com/doc.htm?docId=118&docType=1&spm=a219a.7395903.0.0.6a4239715JvKjW">参考文档</a></td>
-        <td><a target="_blank" href="https://console.open.taobao.com/">应用申请</a></td>
+        <td><a target="_blank" href="https://work.open.taobao.com/open-console-home/index">应用申请</a></td>
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/alipay.svg" height="30" title="支付宝/Alipay"></td>
@@ -42,7 +42,7 @@ Install-Package Netnr.Login
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/dingtalk.svg" height="30" title="钉钉/DingTalk"></td>
-        <td><a target="_blank" href="https://open.dingtalk.com/document/isvapp/obtain-identity-credentials">参考文档</a></td>
+        <td><a target="_blank" href="https://open.dingtalk.com/document/development/obtain-identity-credentials">参考文档</a></td>
         <td><a target="_blank" href="https://open-dev.dingtalk.com/fe/app">应用申请</a></td>
     </tr>
     <tr>
@@ -59,11 +59,6 @@ Install-Package Netnr.Login
         <td><img src="https://gs.zme.ink/static/login/xiaomi.svg" height="30" title="小米/Xiaomi"></td>
         <td><a target="_blank" href="https://dev.mi.com/console/doc/detail?pId=707">参考文档</a></td>
         <td><a target="_blank" href="https://dev.mi.com/passport/oauth2/applist">应用申请</a></td>
-    </tr>
-    <tr>
-        <td><img src="https://gs.zme.ink/static/login/atomgit.svg" height="30" title="AtomGit"></td>
-        <td><a target="_blank" href="https://docs.atomgit.com/oauth/">参考文档</a></td>
-        <td><a target="_blank" href="https://atomgit.com">应用申请</a></td>
     </tr>
     <tr>
         <td><img src="https://gs.zme.ink/static/login/gitee.svg" height="30" title="码云/Gitee"></td>
@@ -113,7 +108,10 @@ v5 版本全面重写，不兼容以前，调用方法更简单简洁
 微软含新旧模式（注意新旧版本标识不相同）  
 钉钉含新旧模式（新：企业内部开发 H5微应用；旧：移动应用接入 扫码登录）  
 
-#### next
+#### 2026-03-12
+删除 AtomGit
+
+#### 2025-05-24
 新增 Facebook  
 更新 支付宝签名 RSACryptoServiceProvider 改为 RSA ，消除 CA1416 提醒
 

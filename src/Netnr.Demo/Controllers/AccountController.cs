@@ -41,12 +41,10 @@ namespace Netnr.Demo.Controllers.LoginDemo
         /// <returns></returns>
         internal static void AssignKey()
         {
-            #region 初始化配置
-            QQ.AppId = "";
-            QQ.AppKey = "";
-            QQ.Redirect_Uri = "https://devd.io:6651/account/authcallback/qq";
-
-            #endregion
+            // 初始化配置
+            Gitee.ClientId = "";
+            Gitee.ClientSecret = "";
+            Gitee.Redirect_Uri = "https://devd.io:6651/account/AuthCallback_Steps/gitee";
 
             #region 自动读取 appsettings.json 
 
@@ -95,10 +93,6 @@ namespace Netnr.Demo.Controllers.LoginDemo
                   "AppId": "",
                   "AppSecret": ""
                 },
-                "AtomGit": {
-                  "ClientId": "",
-                  "ClientSecret": ""
-                },
                 "Gitee": {
                   "ClientId": "",
                   "ClientSecret": ""
@@ -125,10 +119,6 @@ namespace Netnr.Demo.Controllers.LoginDemo
                   "ClientId": "",
                   "ClientSecret": ""
                 },
-                "Facebook": {
-                  "ClientId": "",
-                  "ClientSecret": ""
-                },
                 "ORCID": {
                   "ClientId": "",
                   "ClientSecret": ""
@@ -137,13 +127,13 @@ namespace Netnr.Demo.Controllers.LoginDemo
 
             */
 
-            // AppTo.GetValue 是从 IConfiguration 对象取值的封装
+            // ConfigTo.GetValue 是从 IConfiguration 对象取值的封装
             LoginTo.InitConfig((loginType, field) =>
             {
                 object val = null;
                 if (field == "Redirect_Uri")
                 {
-                    val = AppTo.GetValue($"OAuthLogin:Redirect_Uri");
+                    val = ConfigTo.GetValue($"OAuthLogin:Redirect_Uri");
                     if (val != null)
                     {
                         val = string.Format(val.ToString(), loginType.ToString().ToLower());
@@ -151,11 +141,11 @@ namespace Netnr.Demo.Controllers.LoginDemo
                 }
                 else if (field.StartsWith("Is"))
                 {
-                    val = AppTo.GetValue<bool?>($"OAuthLogin:{loginType}:{field}");
+                    val = ConfigTo.GetValue<bool?>($"OAuthLogin:{loginType}:{field}");
                 }
                 else if (!field.StartsWith("API_"))
                 {
-                    val = AppTo.GetValue($"OAuthLogin:{loginType}:{field}");
+                    val = ConfigTo.GetValue($"OAuthLogin:{loginType}:{field}");
                 }
                 return val;
             });
@@ -259,7 +249,7 @@ namespace Netnr.Demo.Controllers.LoginDemo
                 else
                 {
                     var loginType = id.Value;
-                    Console.WriteLine($"{Environment.NewLine}----- Sign in with {loginType} {DateTime.Now:yyyy-MM-dd HH:mm:ss}{Environment.NewLine}");
+                    Console.WriteLine($"{Environment.NewLine}----- {QuickTo.NowTime} Sign in with {loginType}{Environment.NewLine}");
 
                     //step: access token（非 旧版 DingTalk）
                     DocModel tokenResult = null;
