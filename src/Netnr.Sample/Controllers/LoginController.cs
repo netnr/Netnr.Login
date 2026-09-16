@@ -1,9 +1,8 @@
 ﻿#if NetnrLogin4
 
-using Microsoft.AspNetCore.Mvc;
 using Netnr.Login;
 
-namespace Netnr.Demo.Controllers.LoginDemo
+namespace Netnr.Sample.Controllers
 {
     /// <summary>
     /// Netnr.Login v4版本以前

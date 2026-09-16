@@ -1,6 +1,6 @@
 ﻿using Netnr.Login;
 
-namespace Netnr.Demo.Controllers.LoginDemo
+namespace Netnr.Sample.Controllers
 {
     /// <summary>
     /// Netnr.Login v5
@@ -44,7 +44,7 @@ namespace Netnr.Demo.Controllers.LoginDemo
             // 初始化配置
             Gitee.ClientId = "";
             Gitee.ClientSecret = "";
-            Gitee.Redirect_Uri = "https://devd.io:6651/account/AuthCallback_Steps/gitee";
+            Gitee.Redirect_Uri = "https://hub.sslip.io:6699/account/AuthCallback_Steps/gitee";
 
             #region 自动读取 appsettings.json 
 
@@ -249,7 +249,7 @@ namespace Netnr.Demo.Controllers.LoginDemo
                 else
                 {
                     var loginType = id.Value;
-                    Console.WriteLine($"{Environment.NewLine}----- {QuickTo.NowTime} Sign in with {loginType}{Environment.NewLine}");
+                    Console.WriteLine($"{Environment.NewLine}----- {QuickTo.NowChinaTime} Sign in with {loginType}{Environment.NewLine}");
 
                     //step: access token（非 旧版 DingTalk）
                     DocModel tokenResult = null;
